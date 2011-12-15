@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<!------------------------------------------------------------------------------
+Copyright (c) 2011 Shazz/TRSi
+
+This File is part of the CODEF project. (http://code.google.com/p/codef/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------
+
+FILE : Cuddly Demo Intro
+
+
+------------------------------------------------------------------------------>
+<html>
+<head>
+
+
+<script src="../codef/codef_core.js"></script>
+<script src="../codef/codef_fx.js"></script>
+
+<!--
+<script src="../../svn/codef/codef_core.js"></script>
+<script src="../../svn/codef/codef_fx.js"></script>
+-->
+
+<script>
+
+var logoUnion = new image('logoUnion.png');
+var logoCarebears = new image('logoCarebears.png');
+var logoCuddly = new image('logoCuddly.png');
+
+var maincanvas;
+var logoUnionDistcanvas, logoCarebearsDistcanvas;
+
+var logoUnionfx;
+var logoUnionfxparam=[
+		{value: 0, amp: 10, inc:0.2, offset: -0.5},
+	      ];
+
+var logoCarebearsfx;
+var logoCarebearsfxparam=[
+		{value: 0, amp: 20, inc:0.01, offset: 0.105},
+		];
+var logoCarebearsfx2;
+var logoCarebearsfxparam2=[
+		{value: 0, amp: 8, inc:0.08, offset: 0.08},
+		];
+
+var oggaudio = new Audio();
+oggaudio.autobuffer=true;
+oggaudio.loop = true;
+oggaudio.src ="cuddly.ogg";
+oggaudio.autoplay=true;
+
+var frameCounter = 0;
+
+var currentAnim = 0;
+var animSpeed = 0.6;
+var anims=[
+		{img: new image('star1.png'), dir: 1, nb: 7, val: 0, x: 464, y:306, rev:true},
+		{img: new image('star2.png'), dir: 1, nb: 12, val: 0, x: 592, y: 372, rev:false},
+		{img: new image('star3.png'), dir: 1, nb: 7, val: 0, x: 433, y: 342, rev:true},
+		{img: new image('star2.png'), dir: 1, nb: 12, val: 0, x: 528, y: 342, rev:false},
+		{img: new image('star3.png'), dir: 1, nb: 7, val: 0, x: 560, y: 350, rev:true},
+		{img: new image('star1.png'), dir: 1, nb: 7, val: 0, x: 40, y:320, rev:true},
+		{img: new image('star2.png'), dir: 1, nb: 12, val: 0, x: 368, y: 340, rev:false},
+		{img: new image('star3.png'), dir: 1, nb: 7, val: 0, x: 244, y: 344, rev:true},
+		{img: new image('star1.png'), dir: 1, nb: 7, val: 0, x: 490, y:340, rev:true},
+		{img: new image('star3.png'), dir: 1, nb: 7, val: 0, x: 274, y: 344, rev:true},
+		{img: new image('star2.png'), dir: 1, nb: 12, val: 0, x: 336, y: 314, rev:false},
+		{img: new image('star2.png'), dir: 1, nb: 12, val: 0, x: 176, y: 310, rev:false},
+		{img: new image('star3.png'), dir: 1, nb: 7, val: 0, x: 80, y: 332, rev:true},
+		{img: new image('star1.png'), dir: 1, nb: 7, val: 0, x: 304, y:310, rev:true},
+		{img: new image('star3.png'), dir: 1, nb: 7, val: 0, x: 208, y: 350, rev:true},
+		{img: new image('star1.png'), dir: 1, nb: 7, val: 0, x: 114, y:326, rev:true},
+
+	      ];
+
+function init()
+{
+	// init canvas and offscreen canvas
+	maincanvas=new canvas(640,400,"main");
+	logoUnionDistcanvas=new canvas(256,122);
+	logoCarebearsDistcanvas=new canvas(640,80);
+	logoCarebearsDistcanvas2=new canvas(640,140);
+
+	// draw the logo in the offscreen canvas
+	logoUnion.draw(logoUnionDistcanvas,0,0);
+	logoCarebears.draw(logoCarebearsDistcanvas2,0,0);
+
+	// apply an FX on the offscreen canvas
+	logoUnionfx=new FX(logoUnionDistcanvas,maincanvas,logoUnionfxparam);
+	logoCarebearsfx=new FX(logoCarebearsDistcanvas,maincanvas,logoCarebearsfxparam);
+	logoCarebearsfx2=new FX(logoCarebearsDistcanvas2,logoCarebearsDistcanvas,logoCarebearsfxparam2);
+
+	// stars
+	for(i=0;i<anims.length;i++)
+	{
+		anims[i].img.setmidhandle();
+		anims[i].img.initTile(30,30);
+	}
+
+	go();
+}
+
+
+function go()
+{
+	maincanvas.fill('#000000');
+	logoCarebearsDistcanvas.clear();
+
+	// draw non moving logo
+	logoCuddly.draw(maincanvas,0,0);
+
+	// Display effects on the main canvas
+	logoUnionfx.sinx(192,146);
+
+	logoCarebearsfx2.sinx(0,0);
+	logoCarebearsfx.siny(10,30);
+
+	// stars
+	anims[currentAnim].img.drawTile(maincanvas,anims[currentAnim].val, anims[currentAnim].x,anims[currentAnim].y, 1.0, 1.0, 1.0, 1.0);
+	if(anims[currentAnim].val>=anims[currentAnim].nb)
+	{
+		if(anims[currentAnim].rev == true) anims[currentAnim].dir = -1;
+		else
+		{
+			anims[currentAnim].dir = 1;
+			anims[currentAnim].val = 0;
+			currentAnim = (currentAnim+1) % anims.length;
+		}
+	}
+	if(anims[currentAnim].val<=0 && anims[currentAnim].dir == -1)
+	{
+		anims[currentAnim].dir = 1;
+		currentAnim = (currentAnim+1) % anims.length;
+	}
+	anims[currentAnim].val += (anims[currentAnim].dir * animSpeed);
+
+	if((frameCounter % 200) == 0)
+	{
+		logoUnionfxparam[0].amp = 250;
+		logoUnionfxparam[0].inc =0.03,
+		logoUnionfxparam[0].offset = -0.05;
+	}
+	if((frameCounter % 400) == 0)
+	{
+		logoUnionfxparam[0].amp = 10;
+		logoUnionfxparam[0].inc =0.2,
+		logoUnionfxparam[0].offset = -0.5;
+	}
+
+
+	frameCounter++;
+	requestAnimFrame( go );
+}
+
+</script>
+</head>
+<body onLoad="init();">
+<br>
+<br>
+<center><div id="main"></div><br>
+<div id='debug'></div>
+<br><a href="javascript:window.location='view-source:'+window.location">View Source</a><br><br>
+<b>Cuddly Intro</b> is part of the <a href="http://code.google.com/p/codef/">CODEF</a> project.</center>
+</body>
+</html>
