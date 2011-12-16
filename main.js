@@ -26,7 +26,10 @@ var jsApp	=
 		}
 				
 		// initialize the "audio"
-		me.audio.init("mp3,ogg");
+		//me.audio.init("mp3,ogg");
+		var player = new music("YM");
+		player.LoadAndRun('data/music/Cuddly - main menu.ym');
+
 		
 		// set all resources to be loaded
 		me.loader.onload = this.loaded.bind(this);
