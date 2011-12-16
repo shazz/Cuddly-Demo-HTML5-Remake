@@ -23,8 +23,8 @@
 			this.parent(x, y, settings);
 			
 			// set h/v velocity
-			this.setVelocity(6, 2);
-			this.setMaxVelocity(6, 6);
+			this.setVelocity(7, 2);
+			this.setMaxVelocity(7, 5);
 			
 			// add friction
 			this.setFriction(0.5);
@@ -79,6 +79,7 @@
 			// if flying
 			if (this.vel.y < 0)
 			{	
+				this.animationspeed = me.sys.fps / 40;
 				if (this.pos.y < 0) 
 				{
 					// make sure we stay in the map limit
@@ -86,11 +87,23 @@
 				}
 				// change animatiom if necessary
 				if (!this.isCurrentAnimation("fly"))
-				 this.setCurrentAnimation("fly");
+				{
+				 	this.setAnimationState(true);
+				 	this.setCurrentAnimation("fly");
+				}
 			}
-			// else walking // falling
-			else if (!this.isCurrentAnimation("walk")) {
+			// else falling
+			else if(this.vel.x == 0)
+			{
+				this.setAnimationState(false);
+				this.setCurrentAnimation("walk");	
+			}
+			// else walking
+			else if (this.vel.x != 0) 
+			{		
+				this.setAnimationState(true);
 				this.setCurrentAnimation("walk");
+				
 			}
 			
 			// check if entity is moving
