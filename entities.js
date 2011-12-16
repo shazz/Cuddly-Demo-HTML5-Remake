@@ -1,6 +1,6 @@
 /* -----
 
-	game object
+	Object Entities
 		
 	------			*/
 
@@ -20,32 +20,28 @@
 			settings.spriteheight = 64;
 			
 			// call the constructor
-			this.parent(x, y , settings);
+			this.parent(x, y, settings);
 			
-			// set the walking & jumping speed
-			this.setVelocity(5, 16);
+			// set h/v velocity
+			this.setVelocity(6, 2);
+			this.setMaxVelocity(6, 6);
 			
 			// add friction
 			this.setFriction(0.5);
-			
-			// adjust the bounding box
-			//this.updateColRect(1,14, -1,0);
 						
 			// set the display to follow our position on both axis
 			me.game.viewport.follow(this.pos);
-         
-			// adjust the deadzone
-			//me.game.viewport.setDeadzone( me.game.viewport.width/6,  me.game.viewport.height/4);
 			
 			// walking animation
 			this.addAnimation ("walk",  [4,5,6,7]);
 			
-			// walking animation
-			this.addAnimation ("jump",  [10]);
+			// flying animation
+			this.addAnimation ("fly",  [8,9]);
 			
 			// set default one
 			this.setCurrentAnimation("walk");
 			
+			// adjust animation timing
 			this.animationspeed = me.sys.fps / 40;
 			
 		},
@@ -61,33 +57,44 @@
 				
 			if (me.input.isKeyPressed('left'))
 			{
-				this.doWalk(true);
+				this.vel.x -= this.accel.x * me.timer.tick;
+				// flip the sprite
+				this.flipX(true);
 			}
 			else if (me.input.isKeyPressed('right'))
 			{
-				this.doWalk(false);
+				this.vel.x += this.accel.x * me.timer.tick;
+				// unflip the sprite
+				this.flipX(false);
 			}
 			
-			if (me.input.isKeyPressed('jump'))
+			if (me.input.isKeyPressed('fly'))
 			{	
-				this.doJump();
+				this.vel.y -= this.accel.y * me.timer.tick;
 			}
 			
 			// check & update player movement
 			this.updateMovement();
 			
-					
-			if (this.jumping || this.falling)
+			// if flying
+			if (this.vel.y < 0)
 			{	
-				if (!this.isCurrentAnimation("jump"))
-				 this.setCurrentAnimation("jump");
+				if (this.pos.y < 0) 
+				{
+					// make sure we stay in the map limit
+					this.pos.y = 0;
+				}
+				// change animatiom if necessary
+				if (!this.isCurrentAnimation("fly"))
+				 this.setCurrentAnimation("fly");
 			}
+			// else walking // falling
 			else if (!this.isCurrentAnimation("walk")) {
 				this.setCurrentAnimation("walk");
 			}
 			
-			// update animation
-			if (this.vel.x!=0 ||this.vel.y!=0)
+			// check if entity is moving
+			if (this.vel.x!=0||this.vel.y!=0)
 			{
 				// update objet animation
 				this.parent(this);
