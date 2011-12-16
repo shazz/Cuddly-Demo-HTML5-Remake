@@ -16,7 +16,7 @@
    </properties>
   </tile>
  </tileset>
- <layer name="parallax_backround" width="440" height="25" visible="0">
+ <layer name="parallax_backround" width="440" height="25">
   <properties>
    <property name="imagesrc" value="background"/>
   </properties>
@@ -44035,7 +44035,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup color="#ff0000" name="Entities" width="440" height="25" visible="0">
-  <object name="MainEntity" x="11872" y="608" width="32" height="32"/>
+ <objectgroup color="#ff0000" name="Entities" width="440" height="25">
+  <object name="MainEntity" x="636" y="605" width="32" height="32"/>
  </objectgroup>
 </map>
