@@ -35,8 +35,8 @@
 			// walking animation
 			this.addAnimation ("walk",  [4,5,6,7]);
 			
-			// flying animation (only 1 sprite???)
-			this.addAnimation ("fly",  [10]);
+			// flying animation
+			this.addAnimation ("fly",  [8,9]);
 			
 			// set default one
 			this.setCurrentAnimation("walk");
