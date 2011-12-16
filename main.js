@@ -58,7 +58,7 @@ var jsApp	=
 		// enable the keyboard
 		me.input.bindKey(me.input.KEY.LEFT,		"left");
 		me.input.bindKey(me.input.KEY.RIGHT,	"right");
-		me.input.bindKey(me.input.KEY.X,		"fly");
+		me.input.bindKey(me.input.KEY.UP,		"fly");
 
 	}
 
