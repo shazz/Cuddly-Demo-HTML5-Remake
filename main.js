@@ -3,7 +3,7 @@
  *   melonJS
  *   http://www.melonjs.org
  *		
- *   Step by step game creation tutorial
+ *   Cuddly Demo HTML5 Remake
  *
  **/
 
@@ -57,8 +57,8 @@ var jsApp	=
 		
 		// enable the keyboard
 		me.input.bindKey(me.input.KEY.LEFT,		"left");
-		me.input.bindKey(me.input.KEY.RIGHT,	"right");
-		me.input.bindKey(me.input.KEY.X,		"jump");
+		me.input.bindKey(me.input.KEY.right,	"right");
+		me.input.bindKey(me.input.KEY.X,		"fly");
 
 	}
 
@@ -68,11 +68,10 @@ var jsApp	=
 var PlayScreen = me.ScreenObject.extend(
 {
 
-   onResetEvent: function()
+	onResetEvent: function()
 	{	
-	  // load a level
-	  me.levelDirector.loadLevel("menu");
-		
+		// load a level
+		me.levelDirector.loadLevel("menu");
 
 	},
 	
@@ -85,7 +84,8 @@ var PlayScreen = me.ScreenObject.extend(
 	onDestroyEvent: function()
 	{
 	
-   }
+	
+	}
 
 });
 
