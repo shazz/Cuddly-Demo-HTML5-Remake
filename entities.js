@@ -71,20 +71,24 @@
 			if (me.input.isKeyPressed('fly'))
 			{	
 				this.vel.y -= this.accel.y * me.timer.tick;
+				
+				// make sure we stay in the map limit
+				if (this.pos.y + this.vel.y < 0) 
+				{
+					// there is no proper bounciness support yet 
+					// in melonJS, so let's just do this for now
+					this.vel.y = this.maxVel.y * me.timer.tick;
+				}
+			
 			}
+			
 			
 			// check & update player movement
 			this.updateMovement();
 			
 			// if flying
-			if (this.vel.y < 0)
+			if (me.input.keyStatus('fly'))
 			{	
-				this.animationspeed = me.sys.fps / 40;
-				if (this.pos.y < 0) 
-				{
-					// make sure we stay in the map limit
-					this.pos.y = 0;
-				}
 				// change animatiom if necessary
 				if (!this.isCurrentAnimation("fly"))
 				{
