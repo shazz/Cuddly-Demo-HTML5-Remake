@@ -88,20 +88,17 @@
 				// change animatiom if necessary
 				if (!this.isCurrentAnimation("fly"))
 				{
-				 	this.setAnimationState(true);
 				 	this.setCurrentAnimation("fly");
 				}
 			}
 			// else falling
 			else if(this.vel.x == 0)
 			{
-				this.setAnimationState(false);
 				this.setCurrentAnimation("walk");	
 			}
 			// else walking
 			else if (this.vel.x != 0) 
 			{		
-				this.setAnimationState(true);
 				this.setCurrentAnimation("walk");
 				
 			}
@@ -109,7 +106,12 @@
 			// check if entity is moving
 			if (this.vel.x!=0||this.vel.y!=0)
 			{
-				// update objet animation
+				// update objet animation is necessary
+				if (this.isCurrentAnimation("walk") && this.vel.x==0)
+				{
+					// don't update animation
+					return true
+				}
 				this.parent(this);
 				return true;
 			}
