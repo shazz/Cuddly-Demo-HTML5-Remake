@@ -95,17 +95,12 @@
 				 	this.setCurrentAnimation("fly");
 				}
 			}
-			// else falling
-			else if(this.vel.x == 0)
+			//falling / walking
+			else if (!this.setCurrentAnimation("walk"))
 			{
 				this.setCurrentAnimation("walk");	
 			}
-			// else walking
-			else if (this.vel.x != 0) 
-			{		
-				this.setCurrentAnimation("walk");
-				
-			}
+			
 			
 			// check if entity is moving
 			if (this.vel.x!=0||this.vel.y!=0)
