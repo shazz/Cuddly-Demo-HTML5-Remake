@@ -70,7 +70,10 @@ var DemoIntro = me.ScreenObject.extend({
 	
 	onResetEvent : function()
 	{
-	
+		
+		// use requestAnimFrame
+		me.sys.useNativeAnimFrame = true;
+		
 		this.maincanvas.fill('#000000');
 		// draw the logo in the offscreen canvas
 		this.logoUnion.draw(this.logoUnionDistcanvas,0,0);

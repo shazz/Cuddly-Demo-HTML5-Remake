@@ -107,14 +107,6 @@ var jsApp	=
 		
 		// debug stuff
 		//me.debug.renderHitBox = true;
-		
-		// we should use this for chrome
-		// but once enable everything is too fast
-		// in the main menu, need to adjust velocity
-		// parameters again, I let you test and see :)
-		// swith to requestAnimFrame
-		//me.sys.useNativeAnimFrame = true;
-
 	}
 
 }; // jsApp
@@ -124,6 +116,9 @@ var PlayScreen = me.ScreenObject.extend(
 {
 	onResetEvent: function()
 	{	
+		// use setInterval
+		me.sys.useNativeAnimFrame = false;
+		
 		// load a level
 		me.levelDirector.loadLevel("menu");
 		
