@@ -86,6 +86,13 @@
 			// check & update player movement
 			this.updateMovement();
 			
+			// check for collision with sthg
+			me.game.collide(this);
+			// actually we can also check here when we collide with 
+			// doors, by checking the object return by the function.
+
+			
+			
 			// if flying
 			if (me.input.keyStatus('fly'))
 			{	
@@ -118,3 +125,31 @@
 		}
 
 	});
+
+	/*****************************************
+	 *										 *
+	 *			a door entity				 *
+	 *										 *
+	 *****************************************/
+	var DoorEntity = me.InvisibleEntity.extend(
+	{	
+		init:function (x, y, settings)
+		{
+			// call the constructor
+			this.parent(x, y, settings);
+			
+			// settings.demo_name was defined in Tiled
+			this.demo_name = settings.demo_name;
+		},	
+
+		// collision notification, something (obj) touched the door !
+		onCollision : function (res, obj)
+		{
+			if (me.input.isKeyPressed('enter'))
+			{
+				console.log("knock knock " + this.demo_name + "!");
+			}
+		},
+		
+	});
+

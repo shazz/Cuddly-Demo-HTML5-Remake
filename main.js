@@ -82,11 +82,18 @@ var jsApp	=
 		
 		// add our player entity in the entity pool
 		me.entityPool.add("MainEntity", MainEntity);
+		// add our door entity in the entity pool
+		me.entityPool.add("DoorEntity", DoorEntity);
 		
 		// enable the keyboard
-		me.input.bindKey(me.input.KEY.LEFT,		"left");
-		me.input.bindKey(me.input.KEY.RIGHT,	"right");
-		me.input.bindKey(me.input.KEY.UP,		"fly");
+		me.input.bindKey(me.input.KEY.LEFT,  "left");
+		me.input.bindKey(me.input.KEY.RIGHT, "right");
+		me.input.bindKey(me.input.KEY.UP,    "fly");
+		// bind the space key, and avoid key repetition
+		me.input.bindKey(me.input.KEY.SPACE, "enter", true);
+		
+		// debug stuff
+		//me.debug.renderHitBox = true;
 
 	}
 
