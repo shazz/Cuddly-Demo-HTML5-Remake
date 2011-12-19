@@ -28,7 +28,12 @@
 			
 			// add friction
 			this.setFriction(0.5);
-						
+			
+			if (jsApp.entityPos != null) {
+				this.pos.x = jsApp.entityPos.x;
+				this.pos.y = jsApp.entityPos.y;
+			}
+			
 			// set the display to follow our position on both axis
 			me.game.viewport.follow(this.pos);
 			
@@ -43,6 +48,8 @@
 			
 			// adjust animation timing
 			this.animationspeed = me.sys.fps / 40;
+			
+			
 			
 		},
 	
@@ -147,7 +154,11 @@
 		{
 			if (me.input.isKeyPressed('enter'))
 			{
-				console.log("knock knock " + this.demo_name + "!");
+				// save the player last pos
+				
+				jsApp.entityPos = obj.pos.clone();
+				//console.log("knock knock " + this.demo_name + "!");
+				me.state.change(jsApp.ScreenID.INTRO);
 			}
 		},
 		

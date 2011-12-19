@@ -10,6 +10,15 @@
 
 var jsApp	= 
 {	
+	// Screen ID when changing state
+	ScreenID : {
+		INTRO : 100, // start at 100 on purpose
+		DOC3D : 101
+	},
+	
+	// last entity position
+	entityPos : null,
+	
 	/* ---
 	
 		Initialize the jsApp
@@ -26,9 +35,8 @@ var jsApp	=
 		}
 				
 		// initialize the "audio"
-		//me.audio.init("mp3,ogg");
-		this.player = new music("YM");
-		
+		me.audio.init("ogg");
+			
 		// get a ref to the canvas
 		var ctx = me.video.getScreenFrameBuffer();
 		// clear surface
@@ -71,12 +79,15 @@ var jsApp	=
 		---										*/
 	loaded: function ()
 	{
-		// start the main menu music
-		this.player.LoadAndRun('data/music/Cuddly - main menu.ym');
+		
 		
 		// set the "Play/Ingame" Screen Object
 		me.state.set(me.state.PLAY, new PlayScreen());
-      
+		
+		// register the various screen;
+		// DemoIntro
+		me.state.set(jsApp.ScreenID.INTRO, new DemoIntro());
+		
 		// start the game 
 		me.state.change(me.state.PLAY);
 		
@@ -91,9 +102,18 @@ var jsApp	=
 		me.input.bindKey(me.input.KEY.UP,    "fly");
 		// bind the space key, and avoid key repetition
 		me.input.bindKey(me.input.KEY.SPACE, "enter", true);
+		// bind the ESC key, to exit demo
+		me.input.bindKey(me.input.KEY.ESC, "exit");
 		
 		// debug stuff
 		//me.debug.renderHitBox = true;
+		
+		// we should use this for chrome
+		// but once enable everything is too fast
+		// in the main menu, need to adjust velocity
+		// parameters again, I let you test and see :)
+		// swith to requestAnimFrame
+		//me.sys.useNativeAnimFrame = true;
 
 	}
 
@@ -102,11 +122,14 @@ var jsApp	=
 /* the in game stuff*/
 var PlayScreen = me.ScreenObject.extend(
 {
-
 	onResetEvent: function()
 	{	
 		// load a level
 		me.levelDirector.loadLevel("menu");
+		
+		// start the main menu music
+		this.YMPlayer = new music("YM");
+		this.YMPlayer.LoadAndRun('data/music/Cuddly - main menu.ym');
 
 	},
 	
@@ -118,8 +141,11 @@ var PlayScreen = me.ScreenObject.extend(
 		---	*/
 	onDestroyEvent: function()
 	{
-	
-	
+		if (this.YMPlayer.player != null) {
+			// stop the menu music
+			// is this the right way ?
+			CODEF_AUDIO_NODE.disconnect();
+		}
 	}
 
 });
