@@ -19,7 +19,7 @@ var DemoIntro = me.ScreenObject.extend({
 		this.logoCuddly = new image(me.loader.getImage('logoCuddly'));
 
 		// init canvas and offscreen canvas
-		this.maincanvas=new canvas(640,400); // remove "main" here
+		this.maincanvas=new canvas(me.video.getScreenCanvas()); // reuse melonJS main canvas
 		this.logoUnionDistcanvas=new canvas(256,122);
 		this.logoCarebearsDistcanvas=new canvas(640,80);
 		this.logoCarebearsDistcanvas2=new canvas(640,140);
@@ -156,16 +156,7 @@ var DemoIntro = me.ScreenObject.extend({
 			this.logoUnionfxparam[0].offset = -0.5;
 		}
 		this.frameCounter++;
-
-		
-		///////////
-		// pas beau !
-		// need to figure out how to directly use the melonJS canvas
-		// instead of blitting everything (again) in it at the end
-		///////////
-		// display main canvas
-		context.drawImage(this.maincanvas.canvas,0 ,0);
-		
+			
 	},
 	
 	/*---
