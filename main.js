@@ -114,6 +114,14 @@ var jsApp	=
 /* the in game stuff*/
 var PlayScreen = me.ScreenObject.extend(
 {
+	
+	init: function()
+	{	
+		this.parent(false)
+		// init the YM Player
+		this.YMPlayer = new music("YM");		
+	},
+	
 	onResetEvent: function()
 	{	
 		// use setInterval
@@ -122,10 +130,11 @@ var PlayScreen = me.ScreenObject.extend(
 		// load a level
 		me.levelDirector.loadLevel("menu");
 		
-		// start the main menu music
-		this.YMPlayer = new music("YM");
+		// start the main menu music 
+		// there is no just a Load function ?
 		this.YMPlayer.LoadAndRun('data/music/Cuddly - main menu.ym');
-
+		// reconnect if we disconnect previously
+		CODEF_AUDIO_NODE.connect(CODEF_AUDIO_CONTEXT.destination);
 	},
 	
 	
@@ -139,6 +148,7 @@ var PlayScreen = me.ScreenObject.extend(
 		if (this.YMPlayer.player != null) {
 			// stop the menu music
 			// is this the right way ?
+			CODEF_MUSICPLAYER.stop();
 			CODEF_AUDIO_NODE.disconnect();
 		}
 	}
