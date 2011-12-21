@@ -72,7 +72,7 @@ var DemoIntro = me.ScreenObject.extend({
 	{
 		
 		// use requestAnimFrame
-		me.sys.useNativeAnimFrame = true;
+		me.sys.useNativeAnimFrame = false;
 		
 		this.maincanvas.fill('#000000');
 		// draw the logo in the offscreen canvas
