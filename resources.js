@@ -31,6 +31,13 @@ var g_resources = [
 		src: "data/sprites/sprites.png"
 	},
 	
+	// flying ball
+	{
+		name: "ball",	
+		type:"image",	
+		src: "data/sprites/ball.png"
+	},
+	
 	// level 1
 	{
 		name: "menu",

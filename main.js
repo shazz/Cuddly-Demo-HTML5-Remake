@@ -130,6 +130,11 @@ var PlayScreen = me.ScreenObject.extend(
 		// load a level
 		me.levelDirector.loadLevel("menu");
 		
+		// add the ball object
+		me.game.add(new BallObject(1, 1),999);
+		me.game.sort();
+
+		
 		// start the main menu music 
 		// there is no just a Load function ?
 		this.YMPlayer.LoadAndRun('data/music/Cuddly - main menu.ym');

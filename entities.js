@@ -163,4 +163,77 @@
 		},
 		
 	});
+	
+	/*****************************************
+	 *										 *
+	 *			a door entity				 *
+	 *										 *
+	 *****************************************/
+	var BallObject = me.InvisibleEntity.extend({
+    
+		init: function(x, y) 
+		{
+			// call the parent constructor
+			this.parent(x, y, {width:me.game.currentLevel.realwidth, height:me.game.currentLevel.realheight});
+			
+			// CODEF CODE
+			
+			// reuse melonJS main canvas
+			this.mycanvas = new canvas(me.video.getScreenCanvas());
+
+			this.spriteImg = new image(me.loader.getImage("ball"));
+			
+			this.sprites = new Array();
+			this.spritesPosX = new Array();
+			this.spritesPosY = new Array();
+			this.x_speed = 0.015;
+			this.y_speed = 0.015;
+
+
+			this.nbSprites = 10;
+			for(var i=0;i<this.nbSprites;i++)
+			{
+				this.sprites[i] = this.spriteImg;
+				this.spritesPosX[i]=0.3*(i+1);
+				this.spritesPosY[i]=0.3*(i+1);
+			}
+			
+			this.x_origin = 305;
+			this.y_origin = 86;
+
+			this.x_amplitude = 306;
+			this.y_amplitude = 84;
+
+			this.x_angFreq = 1;
+			this.y_angFreq = 1.5;
+
+			this.x_phase = 0;
+			this.y_phase = 0;
+
+			// END CODEF CODE
+		},
+		
+		update : function() {
+			return true;
+		},
+		
+		
+		draw: function(context) 
+		{
+			// CODEF CODE
+			for (var counter = 0; counter < 100; counter++)
+			{
+				this.spritesPosX[counter] += this.x_speed;
+				this.spritesPosY[counter] += this.y_speed;
+
+				if(counter < this.nbSprites)
+					this.sprites[counter].draw(this.mycanvas, 
+											   this.x_origin + this.x_amplitude*Math.sin(this.x_phase + this.spritesPosX[counter]*this.x_angFreq), 
+											   this.y_origin + this.y_amplitude*Math.cos(this.y_phase + this.spritesPosY[counter]*this.y_angFreq) );
+			}
+			// END CODEF CODE
+		}
+	  
+	});
+
 
