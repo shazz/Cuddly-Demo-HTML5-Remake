@@ -31,18 +31,64 @@ var g_resources = [
 		src: "data/sprites/sprites.png"
 	},
 	
-	// flying ball
-	{
-		name: "ball",	
-		type:"image",	
-		src: "data/sprites/ball.png"
-	},
-	
 	// level 1
 	{
 		name: "menu",
 		type: "tmx",	
 		src: "data/menu.tmx"
+	},
+	
+	// flying sprites
+	{
+		name: "sprite_t",	
+		type:"image",	
+		src: "data/sprites/sprite_t.png"
+	},
+	{
+		name: "sprite_h",	
+		type:"image",	
+		src: "data/sprites/sprite_h.png"
+	},
+	{
+		name: "sprite_e",	
+		type:"image",	
+		src: "data/sprites/sprite_e.png"
+	},
+	{
+		name: "sprite_e2",	
+		type:"image",	
+		src: "data/sprites/sprite_e2.png"
+	},	
+	{
+		name: "sprite_c",	
+		type:"image",	
+		src: "data/sprites/sprite_c.png"
+	},
+	{
+		name: "sprite_a",	
+		type:"image",	
+		src: "data/sprites/sprite_a.png"
+	},
+	{
+		name: "sprite_r",	
+		type:"image",	
+		src: "data/sprites/sprite_r.png"
+	},
+	{
+		name: "sprite_b",	
+		type:"image",	
+		src: "data/sprites/sprite_b.png"
+	},
+	{
+		name: "sprite_s",	
+		type:"image",	
+		src: "data/sprites/sprite_s.png"
+	},	
+	
+	{
+		name: "fonts",
+		type:"image",
+		src: "data/fonts/fonts82x80.png"
 	},
 	
 	/////////////////////////

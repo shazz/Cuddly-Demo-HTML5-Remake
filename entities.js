@@ -179,24 +179,39 @@
 			// CODEF CODE
 			
 			// reuse melonJS main canvas
-			this.mycanvas = new canvas(me.video.getScreenCanvas());
-
-			this.spriteImg = new image(me.loader.getImage("ball"));
+			this.maincanvas = new canvas(me.video.getScreenCanvas());
 			
 			this.sprites = new Array();
 			this.spritesPosX = new Array();
 			this.spritesPosY = new Array();
-			this.x_speed = 0.015;
-			this.y_speed = 0.015;
+			this.x_speed = 0.05;
+			this.y_speed = 0.05;
 
 
-			this.nbSprites = 10;
-			for(var i=0;i<this.nbSprites;i++)
+			this.nbSprites = 12;
+			for(var i=0;i<3;i++)
 			{
-				this.sprites[i] = this.spriteImg;
 				this.spritesPosX[i]=0.3*(i+1);
 				this.spritesPosY[i]=0.3*(i+1);
 			}
+			for(var i=3;i<this.nbSprites;i++)
+			{
+				this.spritesPosX[i]=0.3*(i+2);
+				this.spritesPosY[i]=0.3*(i+2);
+			}			
+			this.sprites[0] = new image(me.loader.getImage("sprite_t"));
+			this.sprites[1] = new image(me.loader.getImage("sprite_h"));
+			this.sprites[2] = new image(me.loader.getImage("sprite_e2"));
+			this.sprites[3] = new image(me.loader.getImage("sprite_c"));
+			this.sprites[4] = new image(me.loader.getImage("sprite_a"));
+			this.sprites[5] = new image(me.loader.getImage("sprite_r"));
+			this.sprites[6] = new image(me.loader.getImage("sprite_e"));
+			this.sprites[7] = new image(me.loader.getImage("sprite_b"));
+			this.sprites[8] = new image(me.loader.getImage("sprite_e"));
+			this.sprites[9] = new image(me.loader.getImage("sprite_a"));
+			this.sprites[10] = new image(me.loader.getImage("sprite_r"));
+			this.sprites[11] = new image(me.loader.getImage("sprite_s"));
+			
 			
 			this.x_origin = 305;
 			this.y_origin = 86;
@@ -209,11 +224,18 @@
 
 			this.x_phase = 0;
 			this.y_phase = 0;
+			
+			this.font = new image(me.loader.getImage("fonts"));
+			this.font.initTile(82,80,32);
+			this.scrolltext = new scrolltext_horizontal();
+			this.scrolltext.scrtxt="ZUPER SCROLL !!!!!!!!!!!!!";
+			this.scrolltext.init(this.maincanvas,this.font,4);
 
 			// END CODEF CODE
 		},
 		
-		update : function() {
+		update : function() 
+		{
 			return true;
 		},
 		
@@ -221,16 +243,23 @@
 		draw: function(context) 
 		{
 			// CODEF CODE
-			for (var counter = 0; counter < 100; counter++)
+			for (var counter = 0; counter < this.nbSprites; counter++)
 			{
 				this.spritesPosX[counter] += this.x_speed;
 				this.spritesPosY[counter] += this.y_speed;
 
-				if(counter < this.nbSprites)
-					this.sprites[counter].draw(this.mycanvas, 
-											   this.x_origin + this.x_amplitude*Math.sin(this.x_phase + this.spritesPosX[counter]*this.x_angFreq), 
-											   this.y_origin + this.y_amplitude*Math.cos(this.y_phase + this.spritesPosY[counter]*this.y_angFreq) );
+				this.sprites[counter].draw(
+					this.maincanvas, 
+					this.x_origin + this.x_amplitude*Math.sin(this.x_phase + this.spritesPosX[counter]*this.x_angFreq), 
+					this.y_origin + this.y_amplitude*Math.cos(this.y_phase + this.spritesPosY[counter]*this.y_angFreq) );
 			}
+			
+			
+			
+			this.maincanvas.contex.fillStyle = "#000000";
+			this.maincanvas.contex.fillRect (0, 294, 640, 406-294);  
+			this.scrolltext.draw(327);
+			
 			// END CODEF CODE
 		}
 	  
