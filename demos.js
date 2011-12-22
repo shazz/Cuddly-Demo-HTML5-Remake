@@ -139,12 +139,14 @@ var DemoIntro = me.ScreenObject.extend({
 				this.currentAnim = (this.currentAnim+1) % this.anims.length;
 			}
 		}
+		this.anims[this.currentAnim].val += (this.anims[this.currentAnim].dir * this.animSpeed);
 		if(this.anims[this.currentAnim].val<=0 && this.anims[this.currentAnim].dir == -1)
 		{
 			this.anims[this.currentAnim].dir = 1;
+			this.anims[this.currentAnim].val = 0;
 			this.currentAnim = (this.currentAnim+1) % this.anims.length;
+			
 		}
-		this.anims[this.currentAnim].val += (this.anims[this.currentAnim].dir * this.animSpeed);
 
 		if((this.frameCounter % 200) == 0)
 		{
