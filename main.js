@@ -139,7 +139,9 @@ var PlayScreen = me.ScreenObject.extend(
 		// there is no just a Load function ?
 		this.YMPlayer.LoadAndRun('data/music/Cuddly - main menu.ym');
 		// reconnect if we disconnect previously
-		CODEF_AUDIO_NODE.connect(CODEF_AUDIO_CONTEXT.destination);
+		if (this.YMPlayer.player != null) {
+			CODEF_AUDIO_NODE.connect(CODEF_AUDIO_CONTEXT.destination);
+		}
 	},
 	
 	
