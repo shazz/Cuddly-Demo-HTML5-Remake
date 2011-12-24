@@ -217,10 +217,10 @@
 			
 			
 			this.x_origin = 305;
-			this.y_origin = 86;
+			this.y_origin = 110;
 
 			this.x_amplitude = 306;
-			this.y_amplitude = 84;
+			this.y_amplitude = 74;
 
 			this.x_angFreq = 1;
 			this.y_angFreq = 1.5;
@@ -260,8 +260,9 @@
 			
 			
 			this.maincanvas.contex.fillStyle = "#000000";
-			this.maincanvas.contex.fillRect (0, 294, 640, 406-294);  
-			this.scrolltext.draw(327);
+			this.maincanvas.contex.fillRect (0, 0, 640, 30);  
+			this.maincanvas.contex.fillRect (0, 318, 640, 390+56);  
+			this.scrolltext.draw(356);
 			
 			// END CODEF CODE
 		}
