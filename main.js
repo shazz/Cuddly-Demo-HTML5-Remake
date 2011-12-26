@@ -33,6 +33,9 @@ var jsApp	=
 			alert("Sorry but your browser does not support html 5 canvas.");
 			return;
 		}
+		
+		// force a viewport with a smaller size
+		me.game.init(640,288+30);
 				
 		// initialize the "audio"
 		me.audio.init("ogg");
@@ -107,6 +110,9 @@ var jsApp	=
 		
 		// debug stuff
 		//me.debug.renderHitBox = true;
+		
+		
+		
 	}
 
 }; // jsApp

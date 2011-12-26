@@ -34,9 +34,6 @@
 				this.pos.y = jsApp.entityPos.y;
 			}
 
-			// change default camera dead zone
-			me.game.viewport.setDeadzone(this.width / 6, (this.height-64));
-			
 			// set the display to follow our position on both axis
 			me.game.viewport.follow(this.pos);
 			
