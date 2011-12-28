@@ -13,7 +13,8 @@ var jsApp	=
 	// Screen ID when changing state
 	ScreenID : {
 		INTRO : 100, // start at 100 on purpose
-		DOC3D : 101
+		DOC3D : 101,
+		BigSprite : 102
 	},
 	
 	// last entity position
@@ -90,6 +91,7 @@ var jsApp	=
 		// register the various screen;
 		// DemoIntro
 		me.state.set(jsApp.ScreenID.INTRO, new DemoIntro());
+		me.state.set(jsApp.ScreenID.BigSprite, new BigSpriteScreen());
 		
 		// start the game 
 		me.state.change(me.state.PLAY);

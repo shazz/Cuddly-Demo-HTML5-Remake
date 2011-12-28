@@ -156,9 +156,16 @@
 			{
 				// save the player last pos
 				
+				// if screen exists, go for it !
 				jsApp.entityPos = obj.pos.clone();
-				//console.log("knock knock " + this.demo_name + "!");
-				me.state.change(jsApp.ScreenID.INTRO);
+				if(!eval("jsApp.ScreenID." + this.demo_name + "==undefined"))
+				{
+					me.state.change(this.demo_name);
+				}
+				else
+				{
+					me.state.change(jsApp.ScreenID.BigSprite);
+				}
 			}
 		},
 		

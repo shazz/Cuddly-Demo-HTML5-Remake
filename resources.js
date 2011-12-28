@@ -143,8 +143,89 @@ var g_resources = [
 		type: "audio", 
 		src: "screens/intro/",	
 		channel : 1
-	}
+	},
+	
+	/////////////////////////
+	// Big Sprite stuff
+	/////////////////////////
+	
+	// 
+	{
+		name: "bs_fontOut",	
+		type:"image",	
+		src: "screens/BigSprite/fonts.png"
+	},
+	// 
+	{
+		name: "bs_fontIn",	
+		type:"image",	
+		src: "screens/BigSprite/fonts_rasters.png"
+	},
+	// 
+	{
+		name: "bs_logoUnion",	
+		type:"image",	
+		src: "screens/BigSprite/logo.png"
+	},
+	// 
+	{
+		name: "bs_logoUnion2",	
+		type:"image",	
+		src: "screens/BigSprite/logo2.png"
+	},
+	// 
+	{
+		name: "bs_rasters",	
+		type:"image",	
+		src: "screens/BigSprite/rasters.png"
+	},
+	// 
+	{
+		name: "bs_spriteT",	
+		type:"image",	
+		src: "screens/BigSprite/spriteT.png"
+	},
+	// 
+	{
+		name: "bs_spriteH",	
+		type:"image",	
+		src: "screens/BigSprite/spriteH.png"
+	},
+	// 
+	{
+		name: "bs_spriteE",	
+		type:"image",	
+		src: "screens/BigSprite/spriteE.png"
+	},
+	// 
+	{
+		name: "bs_spriteC",	
+		type:"image",	
+		src: "screens/BigSprite/spriteC.png"
+	},
+	// 
+	{
+		name: "bs_spriteA",	
+		type:"image",	
+		src: "screens/BigSprite/spriteA.png"
+	},
+	// 
+	{
+		name: "bs_spriteR",	
+		type:"image",	
+		src: "screens/BigSprite/spriteR.png"
+	},
+	// 
+	{
+		name: "bs_spriteB",	
+		type:"image",	
+		src: "screens/BigSprite/spriteB.png"
+	},
+	// 
+	{
+		name: "bs_spriteS",	
+		type:"image",	
+		src: "screens/BigSprite/spriteS.png"
+	},
 
-	
-	
 ];
