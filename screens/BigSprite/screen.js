@@ -55,7 +55,9 @@ var BigSpriteScreen = me.ScreenObject.extend({
 		
 		this.scrolltextIn = new scrolltext_horizontal();
 		this.scrolltextIn.scrtxt=this.text;
-		this.scrolltextIn .init(this.scrollcanvas,this.fontIn,6);		
+		this.scrolltextIn .init(this.scrollcanvas,this.fontIn,6);	
+		
+		this.logoAngle = 0;
 	},
 	
 	/* ---
@@ -96,7 +98,13 @@ var BigSpriteScreen = me.ScreenObject.extend({
 		this.starfield.draw();		
 		
 		// draw the logo in the offscreen canvas
-		this.logoUnion.draw(this.maincanvas,320,200);
+		this.logoUnion.draw(this.maincanvas, 320 + 120*Math.cos(this.logoAngle), 180 + 80*Math.sin(this.logoAngle*2));
+		
+		// draw sprites
+		for(var i=0; i<11; i++)
+		{
+			this.sprites[i].draw(this.maincanvas, 320 + 300*Math.sin(this.logoAngle*1.3 - (i*0.2)), 180 + 180*Math.cos(this.logoAngle/2  - (i*0.2)));
+		}
 		
 		this.scrolltextIn.draw( 0);
 		this.scrollcanvas.contex.globalCompositeOperation='source-in';
@@ -108,6 +116,8 @@ var BigSpriteScreen = me.ScreenObject.extend({
 		this.scrollcanvas.draw(this.maincanvas, 34, 352)			
 		this.fontOut.drawTile(this.maincanvas, 28, -32,352);
 		this.fontOut.drawTile(this.maincanvas, 30, 640-34,352);
+		
+		this.logoAngle += 0.04;
 	},
 	
 	/*---
