@@ -227,5 +227,11 @@ var g_resources = [
 		type:"image",	
 		src: "screens/BigSprite/spriteS.png"
 	},
+	// 
+	{
+		name: "bs_spriteSpc",	
+		type:"image",	
+		src: "screens/BigSprite/spriteSpc.png"
+	},	
 
 ];
