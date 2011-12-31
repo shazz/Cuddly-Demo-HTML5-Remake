@@ -233,5 +233,11 @@ var g_resources = [
 		type:"image",	
 		src: "screens/BigSprite/spriteSpc.png"
 	},	
-
+	// todo audio track
+	/*{
+		name: "BigSpriteTrack",		
+		type: "audio", 
+		src: "screens/BigSprite/Cuddly - Big Sprite.ym",	
+		channel : 1
+	}*/	
 ];

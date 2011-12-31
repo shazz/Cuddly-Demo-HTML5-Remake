@@ -101,6 +101,9 @@ var BigSpriteScreen = me.ScreenObject.extend({
 		me.sys.useNativeAnimFrame = false;
 		
 		this.maincanvas.fill('#000000');	
+		
+		// play music
+		//me.audio.playTrack("BigSprite");
 	},
 	
 
@@ -214,6 +217,7 @@ var BigSpriteScreen = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// stop the current track
+		me.audio.stopTrack();
 
 	}
 
