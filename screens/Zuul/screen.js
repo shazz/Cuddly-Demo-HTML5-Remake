@@ -20,7 +20,7 @@ var ZuulScreen = me.ScreenObject.extend({
 		this.font = new image(me.loader.getImage("fonts"));
 		this.font.initTile(82,80,32);
 		this.scrolltext = new scrolltext_horizontal();
-		this.scrolltext.scrtxt="THIS SCREEN IS HOMELESS !!!! PLEASE HELP !   ";
+		this.scrolltext.scrtxt="ZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUUL";
 		this.scrolltext.init(this.maincanvas,this.font,12);
 	},
 	
