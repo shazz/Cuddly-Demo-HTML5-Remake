@@ -12,9 +12,23 @@ var jsApp	=
 {	
 	// Screen ID when changing state
 	ScreenID : {
-		INTRO : 100, // start at 100 on purpose
-		DOC3D : 101,
-		BigSprite : 102
+		intro 			: 100, // start at 100 on purpose, don't use UpperCase !
+		doc3d 			: 101,
+		bigSprite 		: 102,
+		thecolorshock2 		: 103,
+		theehhdemo		: 104,
+		themegascroller		: 105,
+		spreadpointdemo 	: 106,
+		thedigidemo		: 107,
+		theledscroller		: 108,
+		thefullscreendemo	: 109,
+		theknucklebuster 	: 110,
+		thestarwarsdemo		: 111,
+		thednademo		: 112,
+		themegaballdemo		: 113,
+		theresetdemo		: 114,
+		thehiddenscreen		: 115,
+		thezuulhiddenscreen	: 116,
 	},
 	
 	// last entity position
@@ -90,8 +104,22 @@ var jsApp	=
 		
 		// register the various screen;
 		// DemoIntro
-		me.state.set(jsApp.ScreenID.INTRO, new DemoIntro());
-		me.state.set(jsApp.ScreenID.BigSprite, new BigSpriteScreen());
+		me.state.set(jsApp.ScreenID.intro, new DemoIntro());
+		me.state.set(jsApp.ScreenID.bigsprite, new BigSpriteScreen());
+		me.state.set(jsApp.ScreenID.thecolorshock2, new Colorshock2Screen());
+		me.state.set(jsApp.ScreenID.theehhdemo, new EhhDemoScreen());
+		me.state.set(jsApp.ScreenID.themegascroller, new MegaScrollerScreen());	
+		me.state.set(jsApp.ScreenID.spreadpointdemo, new SpreadpointDemoScreen()); 
+		me.state.set(jsApp.ScreenID.thedigidemo, new DigiDemoScreen());	
+		me.state.set(jsApp.ScreenID.theledscroller, new LedScrollerScreen());	
+		me.state.set(jsApp.ScreenID.thefullscreendemo, new FullscreenDemoScreen());
+		me.state.set(jsApp.ScreenID.theknucklebuster, new KnucklebusterScreen()); 
+		me.state.set(jsApp.ScreenID.thestarwarsdemo, new StarwarsDemoScreen());	
+		me.state.set(jsApp.ScreenID.thednademo, new DNADemoScreen());	
+		me.state.set(jsApp.ScreenID.themegaballdemo, new MegaBallScreen());	
+		me.state.set(jsApp.ScreenID.theresetdemo, new ResetDemoScreen());	
+		me.state.set(jsApp.ScreenID.thehiddenscreen, new HiddenScreen());	
+		me.state.set(jsApp.ScreenID.thezuulhiddenscreen, new ZuulScreen());				
 		
 		// start the game 
 		me.state.change(me.state.PLAY);

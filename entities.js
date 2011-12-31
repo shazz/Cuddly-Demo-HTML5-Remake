@@ -158,14 +158,8 @@
 				
 				// if screen exists, go for it !
 				jsApp.entityPos = obj.pos.clone();
-				if(!eval("jsApp.ScreenID." + this.demo_name + "==undefined"))
-				{
-					me.state.change(this.demo_name);
-				}
-				else
-				{
-					me.state.change(jsApp.ScreenID.BigSprite);
-				}
+				this.goto = eval("jsApp.ScreenID." + this.demo_name);
+				me.state.change(this.goto);
 			}
 		},
 		
