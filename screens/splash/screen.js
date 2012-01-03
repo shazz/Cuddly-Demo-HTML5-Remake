@@ -17,6 +17,9 @@ var SplashScreen = me.ScreenObject.extend({
 		// background image
 		this.backgroundImg = null;
 		this.loaded = false;
+	
+		// make sure the background is black
+		me.video.clearSurface(me.video.getScreenFrameBuffer(), "black");
 	},
 	
 	/* ---
@@ -26,7 +29,7 @@ var SplashScreen = me.ScreenObject.extend({
 	onResetEvent : function()
 	{	
 		var self = this;
-
+		
 		// background image
 		me.loader.load({name: "amigaga", type:"image", src: "screens/splash/amigaga.png"}, function() 
 		{
@@ -64,7 +67,10 @@ var SplashScreen = me.ScreenObject.extend({
 	draw : function(context) {
 		if (this.loaded) {
 			// display the background
-			context.drawImage(this.backgroundImg, 0 ,0);
+			context.drawImage(this.backgroundImg, 
+							  (context.canvas.width  - this.backgroundImg.width) / 2,
+							  (context.canvas.height  - this.backgroundImg.height) / 2);
+		
 		}
 	},
 	
