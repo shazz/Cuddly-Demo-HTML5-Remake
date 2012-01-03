@@ -80,7 +80,7 @@
 				this.vel.y -= this.accel.y * me.timer.tick;
 				
 				// make sure we stay in the map limit
-				if (this.pos.y + this.vel.y < 0) 
+				if (this.pos.y + this.vel.y < 30) 
 				{
 					// there is no proper bounciness support yet 
 					// in melonJS, so let's just do this for now
