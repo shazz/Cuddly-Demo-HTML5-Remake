@@ -56,28 +56,8 @@ var jsApp	=
 		// initialize the "audio"
 		me.audio.init("ogg");
 		
-		// register the various screen;
-		// DemoIntro
+		// splash screen
 		me.state.set(jsApp.ScreenID.amigarulez, new SplashScreen());
-		me.state.set(jsApp.ScreenID.intro, new DemoIntro());
-		me.state.set(jsApp.ScreenID.bigsprite, new BigSpriteScreen());
-		me.state.set(jsApp.ScreenID.thecolorshock2, new Colorshock2Screen());
-		me.state.set(jsApp.ScreenID.theehhdemo, new EhhDemoScreen());
-		me.state.set(jsApp.ScreenID.themegascroller, new MegaScrollerScreen());	
-		me.state.set(jsApp.ScreenID.spreadpointdemo, new SpreadpointDemoScreen()); 
-		me.state.set(jsApp.ScreenID.thedigidemo, new DigiDemoScreen());	
-		me.state.set(jsApp.ScreenID.theledscroller, new LedScrollerScreen());	
-		me.state.set(jsApp.ScreenID.thefullscreendemo, new FullscreenDemoScreen());
-		me.state.set(jsApp.ScreenID.theknucklebuster, new KnucklebusterScreen()); 
-		me.state.set(jsApp.ScreenID.thestarwarsdemo, new StarwarsDemoScreen());	
-		me.state.set(jsApp.ScreenID.thednademo, new DNADemoScreen());	
-		me.state.set(jsApp.ScreenID.themegaballdemo, new MegaBallScreen());	
-		me.state.set(jsApp.ScreenID.theresetdemo, new ResetDemoScreen());	
-		me.state.set(jsApp.ScreenID.thehiddenscreen, new HiddenScreen());	
-		me.state.set(jsApp.ScreenID.thezuulhiddenscreen, new ZuulScreen());				
-		// set the "Play/Ingame" Screen Object
-		me.state.set(me.state.PLAY, new PlayScreen());
-		
 		
 		// start the game 
 		me.state.change(jsApp.ScreenID.amigarulez);
@@ -87,7 +67,7 @@ var jsApp	=
 	/* ---
 	
 		this is temporary		
-		---										*/
+		---					*/
 	preload: function ()
 	{
 		// get a ref to the canvas
@@ -133,8 +113,27 @@ var jsApp	=
 	loaded: function ()
 	{
 		
-		// start the game 
-		me.state.change(me.state.PLAY);
+		// register the various screen;
+		// DemoIntro
+		me.state.set(jsApp.ScreenID.intro, new DemoIntro());
+		me.state.set(jsApp.ScreenID.bigsprite, new BigSpriteScreen());
+		me.state.set(jsApp.ScreenID.thecolorshock2, new Colorshock2Screen());
+		me.state.set(jsApp.ScreenID.theehhdemo, new EhhDemoScreen());
+		me.state.set(jsApp.ScreenID.themegascroller, new MegaScrollerScreen());	
+		me.state.set(jsApp.ScreenID.spreadpointdemo, new SpreadpointDemoScreen()); 
+		me.state.set(jsApp.ScreenID.thedigidemo, new DigiDemoScreen());	
+		me.state.set(jsApp.ScreenID.theledscroller, new LedScrollerScreen());	
+		me.state.set(jsApp.ScreenID.thefullscreendemo, new FullscreenDemoScreen());
+		me.state.set(jsApp.ScreenID.theknucklebuster, new KnucklebusterScreen()); 
+		me.state.set(jsApp.ScreenID.thestarwarsdemo, new StarwarsDemoScreen());	
+		me.state.set(jsApp.ScreenID.thednademo, new DNADemoScreen());	
+		me.state.set(jsApp.ScreenID.themegaballdemo, new MegaBallScreen());	
+		me.state.set(jsApp.ScreenID.theresetdemo, new ResetDemoScreen());	
+		me.state.set(jsApp.ScreenID.thehiddenscreen, new HiddenScreen());	
+		me.state.set(jsApp.ScreenID.thezuulhiddenscreen, new ZuulScreen());				
+		
+		// set the "Play/Ingame" Screen Object
+		me.state.set(me.state.PLAY, new PlayScreen());
 		
 		// add our player entity in the entity pool
 		me.entityPool.add("MainEntity", MainEntity);
@@ -153,6 +152,8 @@ var jsApp	=
 		// debug stuff
 		//me.debug.renderHitBox = true;
 		
+		// start the game 
+		me.state.change(me.state.PLAY);
 		
 		
 	}
