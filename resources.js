@@ -94,7 +94,7 @@ var g_resources = [
 	/////////////////////////
 	// intro stuff
 	/////////////////////////
-	
+	/*
 	// logoCarebears
 	{
 		name: "logoCarebears",	
@@ -144,7 +144,7 @@ var g_resources = [
 		src: "screens/intro/",	
 		channel : 1
 	},
-	
+	*/
 	/////////////////////////
 	// Big Sprite stuff
 	/////////////////////////

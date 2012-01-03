@@ -58,8 +58,10 @@ var jsApp	=
 		
 		// splash screen
 		me.state.set(jsApp.ScreenID.amigarulez, new SplashScreen());
+		// DemoIntro
+		me.state.set(jsApp.ScreenID.intro, new DemoIntro());
 		
-		// start the game 
+		// start the splash 
 		me.state.change(jsApp.ScreenID.amigarulez);
 			
 	},
@@ -114,8 +116,6 @@ var jsApp	=
 	{
 		
 		// register the various screen;
-		// DemoIntro
-		me.state.set(jsApp.ScreenID.intro, new DemoIntro());
 		me.state.set(jsApp.ScreenID.bigsprite, new BigSpriteScreen());
 		me.state.set(jsApp.ScreenID.thecolorshock2, new Colorshock2Screen());
 		me.state.set(jsApp.ScreenID.theehhdemo, new EhhDemoScreen());

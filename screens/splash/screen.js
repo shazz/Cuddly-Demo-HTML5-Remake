@@ -42,8 +42,8 @@ var SplashScreen = me.ScreenObject.extend({
 					me.game.viewport.fadeIn("#000000", 500, function(){
 						// trick to avoid the splash to be redraw in the mean time
 						self.loaded = false; 
-						// and preload the rest
-						jsApp.preload()
+						// switch to the intro
+						me.state.change(jsApp.ScreenID.intro);
 					});
 				}, 1000);
 			});

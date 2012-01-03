@@ -14,11 +14,22 @@ var DemoIntro = me.ScreenObject.extend({
 		// call the parent constructor
 		this.parent(true);
 		
-		this.logoUnion = new image(me.loader.getImage('logoUnion'));
-		this.logoCarebears = new image(me.loader.getImage('logoCarebears'));
-		this.logoCuddly = new image(me.loader.getImage('logoCuddly'));
-
-		// init canvas and offscreen canvas
+		// to keep track of what have been loaded
+		this.loaded = false;
+		this.assetCount = 0;
+		
+		me.loader.load({name: "logoUnion", type:"image", src: "screens/intro/logoUnion.png"}, this.onAssetLoaded.bind(this));
+		me.loader.load({name: "logoCarebears", type:"image", src: "screens/intro/logoCarebears.png"}, this.onAssetLoaded.bind(this));
+		me.loader.load({name: "logoCuddly", type:"image", src: "screens/intro/logoCuddly.png"}, this.onAssetLoaded.bind(this));
+		me.loader.load({name: "star1", type:"image", src: "screens/intro/star1.png"}, this.onAssetLoaded.bind(this));
+		me.loader.load({name: "star2", type:"image", src: "screens/intro/star2.png"}, this.onAssetLoaded.bind(this));
+		me.loader.load({name: "star3", type:"image", src: "screens/intro/star3.png"}, this.onAssetLoaded.bind(this));
+		// we need to load the "cuddly.ogg" file as well, but for now, the load() function can only manually load images
+		
+		
+		// use requestAnimFrame
+		me.sys.useNativeAnimFrame = false;
+		
 		this.maincanvas=new canvas(me.video.getScreenCanvas()); // reuse melonJS main canvas
 		this.logoUnionDistcanvas=new canvas(256,122);
 		this.logoCarebearsDistcanvas=new canvas(640,80);
@@ -42,6 +53,41 @@ var DemoIntro = me.ScreenObject.extend({
 
 		this.currentAnim = 0;
 		this.animSpeed = 0.6;
+
+
+	},
+	
+	/* ---
+		onReset (called by the engine) function
+	   ----*/
+	
+	onResetEvent : function()
+	{
+		me.input.bindKey(me.input.KEY.SPACE, "space", true);
+	},
+	
+	onAssetLoaded : function()
+	{
+		this.assetCount++;
+		if (this.assetCount==6)
+		{
+			this.iniIntroScreen();
+			this.loaded = true;
+		}
+	},
+	
+	
+	/* ---
+		onReset (called by the engine) function
+	   ----*/
+	
+	iniIntroScreen : function()
+	{
+		this.logoUnion = new image(me.loader.getImage('logoUnion'));
+		this.logoCarebears = new image(me.loader.getImage('logoCarebears'));
+		this.logoCuddly = new image(me.loader.getImage('logoCuddly'));
+
+		// init canvas and offscreen canvas
 		this.anims=[
 				{img: new image(me.loader.getImage('star1')), dir: 1, nb: 7,  val: 0, x: 464, y: 306, rev:true},
 				{img: new image(me.loader.getImage('star2')), dir: 1, nb: 12, val: 0, x: 592, y: 372, rev:false},
@@ -62,18 +108,6 @@ var DemoIntro = me.ScreenObject.extend({
 		];
 
 		
-	},
-	
-	/* ---
-		onReset (called by the engine) function
-	   ----*/
-	
-	onResetEvent : function()
-	{
-		
-		// use requestAnimFrame
-		me.sys.useNativeAnimFrame = false;
-		
 		this.maincanvas.fill('#000000');
 		// draw the logo in the offscreen canvas
 		this.logoUnion.draw(this.logoUnionDistcanvas,0,0);
@@ -92,17 +126,17 @@ var DemoIntro = me.ScreenObject.extend({
 		}
 		
 		// play menu song
-		me.audio.playTrack("cuddly");
+		//me.audio.playTrack("cuddly");
 	},
-	
+
 
 	// make sure the screen is refreshed at every change 
 	update : function() {
-		// if press ESC
-		if (me.input.isKeyPressed('exit'))
+		// if press space
+		if (this.loaded && me.input.isKeyPressed('space'))
 		{
-			// go back to menu
-			me.state.change(me.state.PLAY);
+			// call the preloader
+			jsApp.preload();
 		}
 		return true;
 	},
@@ -113,8 +147,12 @@ var DemoIntro = me.ScreenObject.extend({
 	  ---*/
 
 	draw : function(context) {
-		
+
 		this.maincanvas.fill('#000000');
+
+		if (!this.loaded)
+		   return;
+
 		this.logoCarebearsDistcanvas.clear();
 
 		// draw non moving logo
@@ -172,7 +210,8 @@ var DemoIntro = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// stop the current track
-		me.audio.stopTrack();
+		//me.audio.stopTrack();
+		me.input.unbindKey(me.input.KEY.SPACE);
 	}
 
 
