@@ -179,8 +179,8 @@ var PlayScreen = me.ScreenObject.extend(
 		// load a level
 		me.levelDirector.loadLevel("menu");
 		
-		// add the ball object
-		me.game.add(new BallObject(1, 1),999);
+		// add the main menu object
+		me.game.add(new MainMenuObject(1, 1),999);
 		me.game.sort();
 
 		

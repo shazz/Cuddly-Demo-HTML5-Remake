@@ -167,18 +167,20 @@
 	
 	/*****************************************
 	 *                                       *
-	 *             a door entity             *
+	 *             Main menu effects         *
 	 *                                       *
 	 *****************************************/
-	var BallObject = me.InvisibleEntity.extend({
+	var MainMenuObject = me.InvisibleEntity.extend({
     
 		init: function(x, y) 
 		{
 			// call the parent constructor
 			this.parent(x, y, {width:me.game.currentLevel.realwidth, height:me.game.currentLevel.realheight});
 			
-			// CODEF CODE
+			// reset original screen dimensions
+			me.video.getScreenCanvas().height = 390+56;	
 			
+			// CODEF CODE
 			// reuse melonJS main canvas
 			this.maincanvas = new canvas(me.video.getScreenCanvas());
 			
@@ -243,6 +245,7 @@
 		
 		draw: function(context) 
 		{
+			
 			// CODEF CODE
 			for (var counter = 0; counter < this.nbSprites; counter++)
 			{
