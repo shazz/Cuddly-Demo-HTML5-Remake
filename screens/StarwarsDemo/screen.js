@@ -4,7 +4,77 @@
 		
 	------	*/
 
-var StarwarsDemoScreen = me.ScreenObject.extend({
+var StarwarsDemoScreen = me.ScreenObject.extend(
+{
+	generateGrid : function (vertices, faces, gridWidth, gridHeight, tesselLevelX, tesselLevelY, lightning)
+	{
+		var DEBUG = false;
+		if(DEBUG)document.getElementById("trace").innerHTML += 'Compute vertices<BR>';
+		for(y=0;y<tesselLevelY; y++)
+		{	
+			for(x=0;x<tesselLevelX+1; x++)
+			{
+				vertices[(y*(2*(tesselLevelX+1))) + (2*x)] 	= 	{x: (-gridWidth/2) + (gridWidth/tesselLevelX)*x, y: (gridHeight/2) - (gridHeight/tesselLevelY)*y, 		z: 0};	
+				vertices[(y*(2*(tesselLevelX+1))) + ((2*x)+1)] 	= 	{x: (-gridWidth/2) + (gridWidth/tesselLevelX)*x, y: (gridHeight/2) - (gridHeight/tesselLevelY)*(y+1), 	z: 0};	
+			}
+		}
+
+		if(DEBUG)
+		{
+			document.getElementById("trace").innerHTML += 'Show results<BR>';
+			for(i=0;i<vertices.length;i++)
+			{
+				document.getElementById("trace").innerHTML +='[' + i + '] x: ' + vertices[i].x + '\ty: ' + vertices[i].y  +'\tz: ' + vertices[i].z + '<BR>';
+			}
+			document.getElementById("trace").innerHTML += 'Compute Faces<BR>';
+		}
+
+
+
+		for(y=0;y<tesselLevelY; y++)
+		{	
+			for(x=0;x<(tesselLevelX); x++)
+			{
+				var i = (x + (y*tesselLevelX));
+				var j = (x + (y*(tesselLevelX+1)) );
+				if(DEBUG)document.getElementById("trace").innerHTML += 'done : y:' + y + ' x: ' + x + ' i: ' + i + ' for elements ' + (2*i) + ' and ' + ((2*i)+1) + '<BR>';
+
+				faces[(2*i)] = 
+				{			p1:0+(2*j), p2:1+(2*j), p3:3+(2*j), 
+							u1:(1.0/(tesselLevelX))*x,	
+							v1:(1.0/tesselLevelY)*y, 	
+							u2:(1.0/(tesselLevelX))*x,	
+							v2:(1.0/tesselLevelY)*(y+1), 	
+							u3:(1.0/(tesselLevelX))*(x+1),
+							v3:(1.0/tesselLevelY)*(y+1),
+							params:lightning
+				};	
+				faces[((2*i)+1)]= 
+				{			p1:3+(2*j), p2:2+(2*j), p3:0+(2*j), 
+							u1:(1.0/(tesselLevelX))*(x+1),	
+							v1:(1.0/tesselLevelY)*(y+1), 	
+							u2:(1.0/(tesselLevelX))*(x+1),	
+							v2:(1.0/tesselLevelY)*y, 	
+							u3:(1.0/(tesselLevelX))*x,
+							v3:(1.0/tesselLevelY)*y,
+							params:lightning
+				};
+			}
+		}
+		if(DEBUG)
+		{
+			document.getElementById("trace").innerHTML += 'Show results<BR>';
+
+			for(i=0;i<faces.length;i++)
+			{
+				document.getElementById("trace").innerHTML +='[' + i + '] p1: ' + faces[i].p1 + '\tp2: ' + faces[i].p2  +'\tp3: ' + faces[i].p3 + '\tu1: ' + faces[i].u1 + '\tv1: ' + faces[i].v1 + '\tu2: ' + faces[i].u2 + '\tv2: ' + faces[i].v2 + '\tu3: ' + faces[i].u3 + '\tv3: ' + faces[i].v3 + '<BR>';
+			}	
+
+			document.getElementById("trace").innerHTML += 'Draw 3D<BR>';
+		}
+
+	},
+
 	/*---
 	
 	init
@@ -95,7 +165,8 @@ var StarwarsDemoScreen = me.ScreenObject.extend({
 		this.scrollcanvas1 = new canvas(640,200);
 		this.scrollcanvas2 = new canvas(640,200);
 		this.scrollrastercanvas = new canvas(640,200);
-		this.starwarscanvas = new canvas(640,200);
+		this.starwarscanvas = new canvas(640,800);
+		this.a3dcanvas = new canvas(640,170);
 		
 		this.fonts = new image(me.loader.getImage('sw_fonts'));
 		this.fonts.initTile(32,20,65);
@@ -160,6 +231,24 @@ var StarwarsDemoScreen = me.ScreenObject.extend({
 		}		
 		
 		this.raster1showed = true;
+		
+		this.planeFaces = new Array();
+		this.planeVerts = new Array();
+				
+		//this.scrollrasters.draw(this.starwarscanvas, 0 , 0);
+		
+		this.swtext = new THREE.Texture( this.starwarscanvas.canvas );
+		//this.swtext = new THREE.Texture( this.scrollrasters.img );
+    		this.swtext.needsUpdate = true;
+ 		 
+   		this.generateGrid(this.planeVerts, this.planeFaces, 360, 400, 10, 20, new MeshBasicMaterial({ map: this.swtext, overdraw: true  }) );
+   		
+   		this.plane3d = new codef3D(this.a3dcanvas, 35, 90, 10, 500 );
+		this.plane3d.faces(this.planeVerts,this.planeFaces, false, true );		
+		this.plane3d.group.rotation.x = -0.7;
+		this.plane3d.group.position.z = -65;
+		this.plane3d.group.position.y = 20;
+				
 	},
 	
 	/* ---
@@ -217,11 +306,13 @@ var StarwarsDemoScreen = me.ScreenObject.extend({
 
 	draw : function(context) 
 	{
+		me.video.getScreenCanvas().height = 400;
 		this.maincanvas.fill('#000000');
 		this.scrollcanvas1.clear();
 		this.scrollcanvas2.clear();
 		this.scrollrastercanvas.clear();
 		this.starwarscanvas.clear();
+		this.a3dcanvas.clear();
 
 		// draw logo
 		this.showLogo();
@@ -242,32 +333,37 @@ var StarwarsDemoScreen = me.ScreenObject.extend({
 		// draw resulting buffer on scroll canvas
 		this.scrollrastercanvas.draw(this.maincanvas, 0, 0)			
 		
-		
 		// scroller
 		for(var i=0;i<12;i++) 
 		{
 			this.scrolltextSw[i].draw(((640-(32+14)*12)/2) + (i*(32+14)));
 		}
-		this.starwarscanvas.contex.globalCompositeOperation='source-atop';
+		
+		//this.starwarscanvas.draw(this.maincanvas, 0, 280);	
+		this.swtext.needsUpdate = true;
+		
+		this.plane3d.draw();
+		this.a3dcanvas.contex.globalCompositeOperation='source-atop';
 		
 		if(this.raster1showed)
 		{
-			this.swrasters1.draw(this.starwarscanvas, 0, 0);
+			this.swrasters1.draw(this.a3dcanvas, 0, 10);
 			this.raster1showed = false;
 		}
 		else
 		{
-			this.swrasters2.draw(this.starwarscanvas, 0, 0);
+			this.swrasters2.draw(this.a3dcanvas, 0, 10);
 			this.raster1showed = true;
 		}
-		this.starwarscanvas.contex.globalCompositeOperation='source-over';
+		this.a3dcanvas.contex.globalCompositeOperation='source-over';	
 		
-		this.starwarscanvas.draw(this.maincanvas, 0, 280);	
+		
+		this.a3dcanvas.draw(this.maincanvas,0,230);
 		
 		// draw sprites
 		for(var i=9-1; i>=0; i--)
 		{
-			this.sprites[i].draw(this.maincanvas, 320 + 300*Math.sin(this.spritesPosX[i]), 300 + 100*Math.cos(this.spritesPosY[i]));
+			this.sprites[i].draw(this.maincanvas, 320 + 280*Math.sin(this.spritesPosX[i]), 250 + 100*Math.cos(this.spritesPosY[i]));
 
 		}		
 	},
