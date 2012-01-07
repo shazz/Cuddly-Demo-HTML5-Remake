@@ -248,7 +248,7 @@ var g_resources = [
 	{
 		name: "sw_fonts",	
 		type:"image",	
-		src: "screens/StarwarsDemo/fonts_sw.png"
+		src: "screens/StarwarsDemo/fonts_sw16.png"
 	},	
 	// 
 	{

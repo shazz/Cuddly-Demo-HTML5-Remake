@@ -152,18 +152,18 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		this.scrollcanvas1 = new canvas(640,200);
 		this.scrollcanvas2 = new canvas(640,200);
 		this.scrollrastercanvas = new canvas(640,200);
-		this.starwarscanvas = new canvas(640,800);
+		this.starwarscanvas = new canvas(320,350);
 		this.a3dcanvas = new canvas(640,170);
 		
 		this.fonts = new image(me.loader.getImage('sw_fonts'));
-		this.fonts.initTile(32,20,65);
+		this.fonts.initTile(32/2,20/2,32);
 		
 		this.scrolltextSw = new Array();
 		for(var i=0;i<12;i++) 
 		{
 			this.scrolltextSw[i] = new scrolltext_vertical();
 			this.scrolltextSw[i].scrtxt = this.swtrspText[i];
-			this.scrolltextSw[i].init(this.starwarscanvas,this.fonts,3, undefined, undefined, 16);
+			this.scrolltextSw[i].init(this.starwarscanvas,this.fonts,1, undefined, undefined, 16/2);
 		}
 		
 		this.fontOut = new image(me.loader.getImage('sw_fontOut'));
@@ -175,11 +175,11 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 
 		this.scrolltextIn = new scrolltext_horizontal();
 		this.scrolltextIn.scrtxt=this.text;
-		this.scrolltextIn .init(this.scrollcanvas1,this.fontIn,12);
+		this.scrolltextIn .init(this.scrollcanvas1,this.fontIn,16);
 		
 		this.scrolltextOut = new scrolltext_horizontal();
 		this.scrolltextOut.scrtxt=this.text;
-		this.scrolltextOut.init(this.scrollcanvas2,this.fontOut,12);
+		this.scrolltextOut.init(this.scrollcanvas2,this.fontOut,16);
 		
 		this.scrolltextfxparam=
 		[
@@ -189,7 +189,7 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		this.scrolltextOutfx = new FX(this.scrollcanvas2,this.scrollrastercanvas,this.scrolltextfxparam);;
 
 		
-		this.starfield=new starfield3D(this.maincanvas, 160, 3, 640,400, 320, 200,'#BBBBBB', 40,0,0, true, 1);		
+		this.starfield=new starfield3D(this.maincanvas, 100, 3, 640,400, 320, 200,'#BBBBBB', 40,0,0, true, 1);		
 		
 		this.swrasters1 = new image(me.loader.getImage('sw_rasters1'));
 		this.swrasters2 = new image(me.loader.getImage('sw_rasters2'));
@@ -221,13 +221,25 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		//this.swtext = new THREE.Texture( this.scrollrasters.img );
     		this.swtext.needsUpdate = true;
  		 
-   		this.generateGrid(this.planeVerts, this.planeFaces, 360, 400, 10, 20, new MeshBasicMaterial({ map: this.swtext, overdraw: true  }) );
+   		this.generateGrid(this.planeVerts, this.planeFaces, 360, 400, 10, 14, new MeshBasicMaterial({ map: this.swtext, overdraw: false  }) );
    		
    		this.plane3d = new codef3D(this.a3dcanvas, 35, 90, 10, 500 );
 		this.plane3d.faces(this.planeVerts,this.planeFaces, false, true );		
 		this.plane3d.group.rotation.x = -0.7;
 		this.plane3d.group.position.z = -65;
 		this.plane3d.group.position.y = 20;
+		
+		// if projected on main canvas
+		//this.plane3d.group.rotation.x = -1.4;
+		//this.plane3d.group.position.z = -280;
+		//this.plane3d.group.position.y = -60;
+				
+		//Debug
+		this.d_showLogo = true; // 0 fps
+		this.d_showTopScroller = true; // 30 fps
+		this.d_showBottomScroller = true; // 25 fps
+		this.d_showSprites = true; // 0 fps
+		this.d_showStarfield = true; // 5 fps
 				
 	},
 	
@@ -254,7 +266,8 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 
 	// make sure the screen is refreshed at every change 
 	update : function() 
-	{			
+	{		
+					
 		// update logo alpha
 		this.logoAlpha += this.logoIncr;
 		if(this.logoAlpha >= 1.0) this.logoIncr = -0.05;
@@ -280,66 +293,90 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 
 	draw : function(context) 
 	{
-		me.video.getScreenCanvas().height = 400;
+		if(me.video.getScreenCanvas().height != 400) me.video.getScreenCanvas().height = 400;
+		
 		this.maincanvas.fill('#000000');
-		this.scrollcanvas1.clear();
-		this.scrollcanvas2.clear();
-		this.scrollrastercanvas.clear();
-		this.starwarscanvas.clear();
-		this.a3dcanvas.clear();
-
-		// draw logo
-		this.showLogo();
 		
-		// draw 3D dot starfield
-		this.starfield.draw();			
-		
-		// draw 2 scrollers : outside and raster inside
-		this.scrolltextIn.draw( 0);
-		this.scrolltextInfx.siny(0,60);
-		this.scrollrastercanvas.contex.globalCompositeOperation='source-atop';
-		this.scrollrasters.draw(this.scrollrastercanvas, 0, 0);
-		
-		this.scrollrastercanvas.contex.globalCompositeOperation='source-over';
-		this.scrolltextOut.draw(0);	
-		this.scrolltextOutfx.siny(0,60);
-		
-		// draw resulting buffer on scroll canvas
-		this.scrollrastercanvas.draw(this.maincanvas, 0, 0)			
-		
-		// scroller
-		for(var i=0;i<12;i++) 
+		if(this.d_showTopScroller)
 		{
-			this.scrolltextSw[i].draw(((640-(32+14)*12)/2) + (i*(32+14)));
+			this.scrollcanvas1.clear();
+			this.scrollcanvas2.clear();
+			this.scrollrastercanvas.clear();
 		}
-		// update rentertarget texture
-		this.swtext.needsUpdate = true;
-		
-		this.plane3d.draw();
-		this.a3dcanvas.contex.globalCompositeOperation='source-atop';
-		
-		// apply 2 raster overlays to fake alpha layer
-		if(this.raster1showed)
+		if(this.d_showBottomScroller)
 		{
-			this.swrasters1.draw(this.a3dcanvas, 0, 10);
-			this.raster1showed = false;
-		}
-		else
-		{
-			this.swrasters2.draw(this.a3dcanvas, 0, 10);
-			this.raster1showed = true;
-		}
-		this.a3dcanvas.contex.globalCompositeOperation='source-over';	
-		
-		// draw 3d canvas
-		this.a3dcanvas.draw(this.maincanvas,0,230);
-			
-		// draw sprites
-		for(var i=8; i>=0; i--)
-		{
-			var index = (this.spritePos - (i*5)) % this.spritePosX.length;
-			this.sprites[i].draw(this.maincanvas, this.spritePosX[index], this.spritePosY[index]);
+			this.starwarscanvas.clear();
+			this.a3dcanvas.clear();
 		}		
+		
+		if(this.d_showLogo)
+		{
+			// draw logo
+			this.showLogo();
+		}
+		
+		if(this.d_showStarfield)
+		{		
+			// draw 3D dot starfield
+			this.starfield.draw();			
+		}
+		
+		if(this.d_showTopScroller)
+		{
+			// draw 2 scrollers : outside and raster inside
+			this.scrolltextIn.draw(0); 							// draw scrollerIn in scrollcanvas1
+			this.scrolltextInfx.siny(0,60); 						// apply fx in scrollrastercanvas
+			this.scrollrastercanvas.contex.globalCompositeOperation='source-atop';
+			this.scrollrasters.draw(this.scrollrastercanvas, 0, 0);				// draw rasters in scrollrastercanvas
+
+			this.scrollrastercanvas.contex.globalCompositeOperation='source-over';
+			this.scrolltextOut.draw(0); 		 					// draw scrollerOut in scrollcanvas2	
+			this.scrolltextOutfx.siny(0,60);						// apply same fx in in scrollrastercanvas
+
+			// draw resulting buffer on scroll canvas		
+			this.scrollrastercanvas.draw(this.maincanvas, 0, 0)				// draw all in maincanvas
+		}
+		
+		if(this.d_showBottomScroller)
+		{
+			// scroller
+			for(var i=0;i<12;i++) 
+			{
+				//this.scrolltextSw[i].draw(((320-(16+7)*12)/2) + (i*(16+7)));
+				this.scrolltextSw[i].draw(22 + (i*23));
+			}
+			// update rentertarget texture
+			this.swtext.needsUpdate = true;
+
+			this.plane3d.draw();
+			this.a3dcanvas.contex.globalCompositeOperation='source-atop';
+
+			// apply 2 raster overlays to fake alpha layer
+			if(this.raster1showed)
+			{
+				this.swrasters1.draw(this.a3dcanvas, 0, 170-162);
+				this.raster1showed = false;
+			}
+			else
+			{
+				this.swrasters2.draw(this.a3dcanvas, 0, 170-162);
+				this.raster1showed = true;
+			}
+			this.a3dcanvas.contex.globalCompositeOperation='source-over';	
+
+			// draw 3d canvas
+			this.a3dcanvas.draw(this.maincanvas,0,230);
+		}
+			
+		if(this.d_showSprites)
+		{
+			// draw sprites
+			for(var i=8; i>=0; i--)
+			{
+				var index = (this.spritePos - (i*5)) % this.spritePosX.length;
+				this.sprites[i].draw(this.maincanvas, this.spritePosX[index], this.spritePosY[index]);
+			}		
+		}
 	},
 	
 	/*---
