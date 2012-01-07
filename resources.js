@@ -240,4 +240,98 @@ var g_resources = [
 		src: "screens/BigSprite/Cuddly - Big Sprite.ym",	
 		channel : 1
 	}*/	
+	
+	/////////////////////////
+	// Starwars stuff
+	/////////////////////////
+	// 
+	{
+		name: "sw_fonts",	
+		type:"image",	
+		src: "screens/StarwarsDemo/fonts_sw.png"
+	},	
+	// 
+	{
+		name: "sw_fontOut",	
+		type:"image",	
+		src: "screens/StarwarsDemo/fonts.png"
+	},
+	// 
+	{
+		name: "sw_fontIn",	
+		type:"image",	
+		src: "screens/StarwarsDemo/fonts_rasters.png"
+	},	
+	// 
+	{
+		name: "sw_logoUnion",	
+		type:"image",	
+		src: "screens/StarwarsDemo/logo.png"
+	},
+	// 
+	{
+		name: "sw_scrollrasters",	
+		type:"image",	
+		src: "screens/StarwarsDemo/rasters.png"
+	},	
+	// 
+	{
+		name: "sw_rasters1",	
+		type:"image",	
+		src: "screens/StarwarsDemo/rasters_sc1.png"
+	},		
+	// 
+	{
+		name: "sw_rasters2",	
+		type:"image",	
+		src: "screens/StarwarsDemo/rasters_sc2.png"
+	},
+	// 
+	{
+		name: "sw_spriteT",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_t.png"
+	},	
+	// 
+	{
+		name: "sw_spriteH",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_h.png"
+	},
+	// 
+	{
+		name: "sw_spriteE",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_e.png"
+	},
+	// 
+	{
+		name: "sw_spriteSpc",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_spc.png"
+	},
+	// 
+	{
+		name: "sw_spriteU",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_u.png"
+	},
+	// 
+	{
+		name: "sw_spriteN",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_n.png"
+	},
+	// 
+	{
+		name: "sw_spriteI",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_i.png"
+	},
+	// 
+	{
+		name: "sw_spriteO",	
+		type:"image",	
+		src: "screens/StarwarsDemo/sprite_o.png"
+	},	
 ];
