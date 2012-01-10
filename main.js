@@ -43,6 +43,9 @@ var jsApp	=
 	init: function()
 	{
 		
+		// turn me on for priceless hours of debug :)		
+		me.sys.enableWebGL = false;
+				
 		// init the video
 		if (!me.video.init('jsapp', 640, 390+56, false, 1.0))
 		{
@@ -63,6 +66,7 @@ var jsApp	=
 		
 		// start the splash 
 		me.state.change(jsApp.ScreenID.amigarulez);
+
 			
 	},
 	
