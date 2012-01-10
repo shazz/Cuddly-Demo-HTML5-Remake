@@ -153,6 +153,15 @@ var jsApp	=
 		// bind the ESC key, to exit demo
 		me.input.bindKey(me.input.KEY.ESC, "exit");
 		
+		//debug
+		me.input.bindKey(me.input.KEY.A, "A", true);
+		me.input.bindKey(me.input.KEY.Z, "Z", true);
+		me.input.bindKey(me.input.KEY.E, "E", true);
+		me.input.bindKey(me.input.KEY.R, "R", true);
+		me.input.bindKey(me.input.KEY.T, "T", true);
+		me.input.bindKey(me.input.KEY.Y, "Y", true);
+		me.input.bindKey(me.input.KEY.U, "U", true);		
+		
 		// debug stuff
 		//me.debug.renderHitBox = true;
 		

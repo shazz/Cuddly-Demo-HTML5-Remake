@@ -191,8 +191,10 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		
 		this.starfield=new starfield3D(this.maincanvas, 100, 3, 640,400, 320, 200,'#BBBBBB', 40,0,0, true, 1);		
 		
-		this.swrasters1 = new image(me.loader.getImage('sw_rasters1'));
-		this.swrasters2 = new image(me.loader.getImage('sw_rasters2'));
+		this.rasterCounter = 0;
+		this.swrasters = new Array();
+		this.swrasters[0] = new image(me.loader.getImage('sw_rasters1'));
+		this.swrasters[1] = new image(me.loader.getImage('sw_rasters2'));
 		
 		this.logoUnion = new image(me.loader.getImage('sw_logoUnion'));
 		this.logoAlpha = 0.00000001;
@@ -209,8 +211,6 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		this.sprites[7] = new image(me.loader.getImage('sw_spriteO'));
 		this.sprites[8] = new image(me.loader.getImage('sw_spriteN'));
 		this.spritePos = 0;
-		
-		this.raster1showed = true;
 		
 		this.planeFaces = [];
 		this.planeVerts = [];
@@ -275,6 +275,8 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		if(this.logoAlpha >= 1.0) this.logoIncr = -0.05;
 		else if(this.logoAlpha <= 0.05) this.logoIncr = +0.05;
 		
+		// rasters
+		this.rasterCounter = 1 - this.rasterCounter;		
 		
 		// sprite		
 		this.spritePos++;
@@ -285,6 +287,12 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 			// go back to menu
 			me.state.change(me.state.PLAY);
 		}
+		else if(me.input.isKeyPressed('A')) this.d_showLogo = !this.d_showLogo;
+		else if(me.input.isKeyPressed('Z')) this.d_showTopScroller = !this.d_showTopScroller;
+		else if(me.input.isKeyPressed('E')) this.d_showBottomScroller = !this.d_showBottomScroller;
+		else if(me.input.isKeyPressed('R')) this.d_showSprites = !this.d_showSprites;
+		else if(me.input.isKeyPressed('T')) this.d_showStarfield = !this.d_showStarfield;
+		
 		return true;
 	},
 
@@ -354,16 +362,8 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 			this.a3dcanvas.contex.globalCompositeOperation='source-atop';
 
 			// apply 2 raster overlays to fake alpha layer
-			if(this.raster1showed)
-			{
-				this.swrasters1.draw(this.a3dcanvas, 0, 170-162);
-				this.raster1showed = false;
-			}
-			else
-			{
-				this.swrasters2.draw(this.a3dcanvas, 0, 170-162);
-				this.raster1showed = true;
-			}
+			this.swrasters[this.rasterCounter].draw(this.a3dcanvas, 0, 170-162);
+
 			this.a3dcanvas.contex.globalCompositeOperation='source-over';	
 
 			// draw 3d canvas

@@ -2,6 +2,17 @@
 <html>
 	<head>
 		<title>Cuddly Demo - HTML5 Remake</title>
+		<style type="text/css" title="">
+		#overlay
+		{
+			position:absolute;
+			width:640px;
+			height:480px;
+			background:url("screens/TRSi/overlay.png");
+			display: none;
+		}
+
+		</style>
 	</head>
 	<body bgcolor="#000000">
       <div id="info" style="width: 640px;">
@@ -10,7 +21,7 @@
 			<span id="framecounter">(0/0 fps)</span>
 			</font>
 		</div></div>
-		<div id="jsapp">
+		<div id="jsapp"><div id="overlay"></div>
 
 		<!-- Lib include -->
 		<script type="text/javascript" src="lib/webgl-2d.js"></script>

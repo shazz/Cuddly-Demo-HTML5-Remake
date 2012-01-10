@@ -178,7 +178,7 @@
 			this.parent(x, y, {width:me.game.currentLevel.realwidth, height:me.game.currentLevel.realheight});
 			
 			// reset original screen dimensions
-			me.video.getScreenCanvas().height = 390+56;	
+			if(me.video.getScreenCanvas().height != 390+56) me.video.getScreenCanvas().height = 390+56;	
 			
 			// CODEF CODE
 			// reuse melonJS main canvas
