@@ -55,6 +55,8 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 	---*/
 	init : function() 
 	{
+		this.USECODEF3D = false;
+	
 		// call the parent constructor
 		this.parent(true);
 		
@@ -73,7 +75,7 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		
 		this.text = "TJA ALLIHOPA (THAT'S SWEDISH, JACKASS), HERE COMES THE CAREBEARS AGAIN, WITH ANOTHER INCREDIBLE DEMO-SCREEN, CALLED THE STARWARS-SCROLLER. YOU HAVE PROBABLY ALREADY FIGURED OUT WHY...       AS WE WRITE THIS, WE'RE OUT IN THE ARCHIPELAGOS OF STOCKHOLM, WHERE AN COOL HAS A SMALL (VERY SMALL) COTTAGE. EVERYBODY IS COMPLAINING ABOUT THEIR ACHING ARMS AND BACKS.  LET'S EXPLAIN WHAT CAUSED THESE UNPLEASENT PAINS      FIRST OF ALL, WE HAD TO TRAVEL BY TRAIN FOR ABOUT ONE HOUR. WE WENT OFF THE TRAIN IN TUMBA, WHERE WE WERE SUPPOSED TO BUY SOME FOOD AND COKE BEFORE WE GOT ON A BUS THAT WOULD DRIVE US CLOSER TO AN COOL'S COTTAGE.  BUT THERE WAS A BIG PROBLEM, WE ONLY HAD ABOUT THREE MINUTES BEFORE THE BUS LEFT, AND THE NEXT BUS WOULD COME IN ABOUT THREE AND A HALF HOUR, SO WE DECIDED TO GET ON THIS BUS AND GO TO ANOTHER SMALL STORE, NEAR THE COTTAGE.   OF COURSE THAT STORE WAS CLOSED WHEN WE GOT THERE.  OKAY, WE GOT OFF THE BUS AND NOW WE HAD A FIVE KILOMETRES WALK TO DO.   REALLY NICE, WITH BAGS FILLED WITH COMPUTERS, MONITORS, CLOTHES AND COKE.    THERE WERE EVEN MORE PROBLEMS TO COME, THE HEAVIEST BAG (WITH A WEIGHT OF ABOUT 50 KILOGRAMS) WAS DESTROYED, AND NOW TANIS AND A.D HAD TO CARRY IT ON THEIR HEADS (AND BACKS).   FINALLY WE REACHED THE COTTAGE, AFTER ABOUT ONE HOUR'S WALK.    OUR ARMS WERE ABOUT TWO METRES LONGER THAN THEY WERE THIS MORNING.  AFTER THIS VERY INTERESTING STORY, YOU CAN UNDERSTAND WHY OUR ARMS ARE ACHING!!        LET'S CHANGE SUBJECT...     TODAY WE GOT THE LOST BOYS DEMO, WHICH WAS QUITE GOOD, BUT NOT NEARLY AS GOOD AS THIS ONE (THIS IS ACTUALLY MORE THAN TEN TIMES BETTER).   WE WERE QUITE DISTURBED WHEN WE SAW THEIR TWIST-SCROLLER, WHICH LOOKED SIMILAR TO OUR DNA-SCROLLER, BUT OF COURSE OURS IS MUCH, MUCH BETTER, AND I THINK THAT WE WROTE IT BEFORE THEY WROTE THEIRS (WE WROTE IT THREE MONTHS AGO).   THEY SAID THAT THEIR DEMO WAS THE BEST \"SINGLE-CREW\"-DEMO EVER, WELL, OUR DEMO IS ALMOST A \"SINGLE-CREW\"-DEMO, AND IF YOU REMOVE THE GUEST APPEARANCES, WE STILL THINK THAT OUR DEMO IS AT LEAST FIVE TIMES BETTER THAN THEIRS.   THE LOST BOYS ALSO WROTE THAT THEIR SOURCE-CODE WAS ABOUT 230 KILOBYTES LONG, WE COUNTED HOW MUCH MEMORY OUR SOURCE-CODE TOOK AND IT WAS ABOUT 1400 KILOBYTES LONG!!!! AND IF YOU WOULD PRINT IT, IT WOULD TAKE 650 A4-PAGES.     NOW YOU PROBABLY THINK THAT WE ARE TALKING BIG.   WELL, WE KNOW WE'RE NOT EXACTLY MODEST, BUT WE CAN'T BE, COZ NOBODY ELSE IS. YOU KNOW, WE HAVE TO BE THE BEST IN EVERYTHING, INCLUDING TALKING BIG.     WE WON'T WRITE ANYTHING MORE, BECAUSE THE ONLY THING WE COULD WRITE NOW IS THE GREETINGS AND WE HAVE GREETINGS ENOUGH IN THE MAIN MENU...   BYE, BYE AND KEEP ON HACKING.......    PUSSELIMUSS!!!    TJA DAUU!!  GOOD NIGHT!! (IT'S TWO O'CLOCK, BUT THE NIGHT IS STILL YOUNG) OKAY, LET'S WRAAAAAAAAAAAAAAAAAAAAAAZ!!!!!!!!!!         ";
 		this.swtext = [];
-		this.swtext[0] = "            ";
+		this.swtext[0] = "AAAAAAAAAAAA";
 		this.swtext[1] = " WELCOME TO ";
 		this.swtext[2] = "THE STARWARS";
 		this.swtext[3] = "  SCROLLER  ";
@@ -211,34 +213,55 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		this.sprites[7] = new image(me.loader.getImage('sw_spriteO'));
 		this.sprites[8] = new image(me.loader.getImage('sw_spriteN'));
 		this.spritePos = 0;
-		
-		this.planeFaces = [];
-		this.planeVerts = [];
-				
+			
 		//this.scrollrasters.draw(this.starwarscanvas, 0 , 0);
-		
+
 		this.swtext = new THREE.Texture( this.starwarscanvas.canvas );
 		//this.swtext = new THREE.Texture( this.scrollrasters.img );
     		this.swtext.needsUpdate = true;
- 		 
-   		this.generateGrid(this.planeVerts, this.planeFaces, 360, 400, 10, 14, new MeshBasicMaterial({ map: this.swtext, overdraw: false  }) );
-   		
-   		this.plane3d = new codef3D(this.a3dcanvas, 35, 90, 10, 500 );
-		this.plane3d.faces(this.planeVerts,this.planeFaces, false, true );		
-		this.plane3d.group.rotation.x = -0.7;
-		this.plane3d.group.position.z = -65;
-		this.plane3d.group.position.y = 20;
+    		
+		if(this.USECODEF3D == false)
+		{
+			this.renderer = new THREE.CanvasRenderer({ canvas: this.a3dcanvas.canvas});
+			this.renderer.setSize( this.a3dcanvas.width, this.a3dcanvas.height );
+			this.renderer.autoClear=false;		
+
+			this.scene = new THREE.Scene(); 
+
+			this.mesh = new THREE.Mesh( new THREE.PlaneGeometry( 100, 280, 8, 12), new THREE.MeshBasicMaterial( { map: this.swtext, overdraw: true } ) );
+			this.mesh.rotation.x = - 52 * Math.PI / 180; 
+			this.mesh.position.y = 44;
+
+			this.camera = new THREE.Camera( 60, 640 / 400, 1, 10000 );
+			this.camera.position.z = 150;
+			this.camera.position.y = 0;
+			this.camera.lookAt( this.scene.position );	
+			this.scene.add( this.mesh );
+		}
+		else
+		{
+			this.planeFaces = [];
+			this.planeVerts = [];		
 		
-		// if projected on main canvas
-		//this.plane3d.group.rotation.x = -1.4;
-		//this.plane3d.group.position.z = -280;
-		//this.plane3d.group.position.y = -60;
+			this.generateGrid(this.planeVerts, this.planeFaces, 360, 400, 10, 14, new MeshBasicMaterial({ map: this.swtext, overdraw: false  }) );
+			this.plane3d = new codef3D(this.a3dcanvas, 35, 90, 10, 500 );
+
+			this.plane3d.faces(this.planeVerts,this.planeFaces, false, true );		
+			this.plane3d.group.rotation.x = -0.7;
+			this.plane3d.group.position.z = -65;
+			this.plane3d.group.position.y = 20;
+			
+			// if projected on main canvas
+			//this.plane3d.group.rotation.x = -1.4;
+			//this.plane3d.group.position.z = -280;
+			//this.plane3d.group.position.y = -60;		
+		}
 				
 		//Debug
-		this.d_showLogo = true; // 0 fps
-		this.d_showTopScroller = true; // 30 fps
+		this.d_showLogo = false; // 0 fps
+		this.d_showTopScroller = false; // 30 fps
 		this.d_showBottomScroller = true; // 25 fps
-		this.d_showSprites = true; // 0 fps
+		this.d_showSprites = false; // 0 fps
 		this.d_showStarfield = true; // 5 fps
 				
 	},
@@ -316,6 +339,7 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		if(this.d_showBottomScroller)
 		{
 			this.starwarscanvas.clear();
+			//this.a3dcanvas.fill('#100100');
 			this.a3dcanvas.clear();
 		}		
 		
@@ -358,7 +382,10 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 			// update rentertarget texture
 			this.swtext.needsUpdate = true;
 
-			this.plane3d.draw();
+			if(this.USECODEF3D == false) this.renderer.render( this.scene, this.camera );
+			else this.plane3d.draw();
+			
+			
 			this.a3dcanvas.contex.globalCompositeOperation='source-atop';
 
 			// apply 2 raster overlays to fake alpha layer
