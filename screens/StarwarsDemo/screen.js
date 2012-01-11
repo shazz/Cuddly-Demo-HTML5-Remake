@@ -55,7 +55,7 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 	---*/
 	init : function() 
 	{
-		this.USECODEF3D = false;
+		this.USECODEF3D = true;
 	
 		// call the parent constructor
 		this.parent(true);
@@ -258,10 +258,10 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		}
 				
 		//Debug
-		this.d_showLogo = false; // 0 fps
-		this.d_showTopScroller = false; // 30 fps
+		this.d_showLogo = true; // 0 fps
+		this.d_showTopScroller = true; // 30 fps
 		this.d_showBottomScroller = true; // 25 fps
-		this.d_showSprites = false; // 0 fps
+		this.d_showSprites = true; // 0 fps
 		this.d_showStarfield = true; // 5 fps
 				
 	},
@@ -280,7 +280,9 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 		if(me.video.getScreenCanvas().height != 400) me.video.getScreenCanvas().height = 400;
 		
 		// play music
-		//me.audio.playTrack("");
+		me.loader.load({name: 'sw_music',  type:'binary',  src: 'screens/StarwarsDemo/Cuddly - Star-Wars.ym'},console.log('StarwarsDemo YM song loaded!'));
+		jsApp.ymPlayer.load(me.loader.getBinary('sw_music'));
+		jsApp.ymPlayer.play();
 	},
 	
 
@@ -327,7 +329,7 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 	draw : function(context) 
 	{
 		
-		
+	
 		this.maincanvas.fill('#000000');
 		
 		if(this.d_showTopScroller)
@@ -416,7 +418,7 @@ var StarwarsDemoScreen = me.ScreenObject.extend(
 	onDestroyEvent : function()
 	{
 		// stop the current track
-		//me.audio.stopTrack();
+		jsApp.ymPlayer.play();
 
 	}
 

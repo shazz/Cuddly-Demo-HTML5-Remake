@@ -35,6 +35,9 @@ var jsApp	=
 	// last entity position
 	entityPos : null,
 	
+	// YmPlayer
+	ymPlayer : null,
+	
 	/* ---
 	
 		Initialize the jsApp
@@ -58,6 +61,7 @@ var jsApp	=
 				
 		// initialize the "audio"
 		me.audio.init("ogg,mp3");
+		jsApp.ymPlayer = new me.YmPlayer();
 		
 		// splash screen
 		me.state.set(jsApp.ScreenID.amigarulez, new SplashScreen());
@@ -179,9 +183,7 @@ var PlayScreen = me.ScreenObject.extend(
 	
 	init: function()
 	{	
-		this.parent(false)
-		// init the YM Player
-		this.YMPlayer = new music("YM");		
+		this.parent(false)		
 	},
 	
 	onResetEvent: function()
@@ -198,12 +200,9 @@ var PlayScreen = me.ScreenObject.extend(
 
 		
 		// start the main menu music 
-		// there is no just a Load function ?
-		this.YMPlayer.LoadAndRun('data/music/Cuddly - main menu.ym');
-		// reconnect if we disconnect previously
-		if (this.YMPlayer.player != null) {
-			CODEF_AUDIO_NODE.connect(CODEF_AUDIO_CONTEXT.destination);
-		}
+		me.loader.load({name: 'main_menu',  type:'binary',  src: 'data/music/Cuddly - main menu.ym'},console.log('Main menu YM song loaded!'));
+		jsApp.ymPlayer.load(me.loader.getBinary('main_menu'));
+		jsApp.ymPlayer.play();
 	},
 	
 	
@@ -214,12 +213,8 @@ var PlayScreen = me.ScreenObject.extend(
 		---	*/
 	onDestroyEvent: function()
 	{
-		if (this.YMPlayer.player != null) {
-			// stop the menu music
-			// is this the right way ?
-			CODEF_MUSICPLAYER.stop();
-			CODEF_AUDIO_NODE.disconnect();
-		}
+		// stop the menu music
+		jsApp.ymPlayer.stop();
 	}
 
 });

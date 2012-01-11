@@ -103,7 +103,9 @@ var BigSpriteScreen = me.ScreenObject.extend({
 		this.maincanvas.fill('#000000');	
 		
 		// play music
-		//me.audio.playTrack("BigSprite");
+		me.loader.load({name: 'bigsprite_music',  type:'binary',  src: 'screens/BigSprite/Cuddly - Big Sprite.ym'},console.log('Big Sprite YM song loaded!'));
+		jsApp.ymPlayer.load(me.loader.getBinary('bigsprite_music'));
+		jsApp.ymPlayer.play();
 	},
 	
 
@@ -217,7 +219,7 @@ var BigSpriteScreen = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// stop the current track
-		me.audio.stopTrack();
+		jsApp.ymPlayer.stop();
 
 	}
 
