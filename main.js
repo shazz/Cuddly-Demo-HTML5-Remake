@@ -57,7 +57,7 @@ var jsApp	=
 		me.game.init(640,288+30);
 				
 		// initialize the "audio"
-		me.audio.init("ogg");
+		me.audio.init("ogg,mp3");
 		
 		// splash screen
 		me.state.set(jsApp.ScreenID.amigarulez, new SplashScreen());

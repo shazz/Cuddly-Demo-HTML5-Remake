@@ -24,6 +24,8 @@ var DemoIntro = me.ScreenObject.extend({
 		me.loader.load({name: "star1", type:"image", src: "screens/intro/star1.png"}, this.onAssetLoaded.bind(this));
 		me.loader.load({name: "star2", type:"image", src: "screens/intro/star2.png"}, this.onAssetLoaded.bind(this));
 		me.loader.load({name: "star3", type:"image", src: "screens/intro/star3.png"}, this.onAssetLoaded.bind(this));
+		me.loader.load({name: "cuddly", type: "audio", src: "screens/intro/", channel : 1},this.onAssetLoaded.bind(this));
+		
 		// we need to load the "cuddly.ogg" file as well, but for now, the load() function can only manually load images
 		
 		
@@ -64,12 +66,15 @@ var DemoIntro = me.ScreenObject.extend({
 	onResetEvent : function()
 	{
 		me.input.bindKey(me.input.KEY.SPACE, "space", true);
+		
+		// play intro track
+		me.audio.playTrack("cuddly");
 	},
 	
 	onAssetLoaded : function()
 	{
 		this.assetCount++;
-		if (this.assetCount==6)
+		if (this.assetCount==7)
 		{
 			this.iniIntroScreen();
 			this.loaded = true;
@@ -125,8 +130,7 @@ var DemoIntro = me.ScreenObject.extend({
 			this.anims[i].img.initTile(30,30);
 		}
 		
-		// play menu song
-		//me.audio.playTrack("cuddly");
+
 	},
 
 
@@ -210,7 +214,7 @@ var DemoIntro = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// stop the current track
-		//me.audio.stopTrack();
+		me.audio.stopTrack();
 		me.input.unbindKey(me.input.KEY.SPACE);
 	}
 
