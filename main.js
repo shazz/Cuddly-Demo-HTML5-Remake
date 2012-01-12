@@ -200,7 +200,6 @@ var PlayScreen = me.ScreenObject.extend(
 
 		
 		// start the main menu music 
-		me.loader.load({name: 'main_menu',  type:'binary',  src: 'data/music/Cuddly - main menu.ym'},console.log('Main menu YM song loaded!'));
 		jsApp.ymPlayer.load(me.loader.getBinary('main_menu'));
 		jsApp.ymPlayer.play();
 	},

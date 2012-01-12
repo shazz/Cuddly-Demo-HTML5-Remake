@@ -91,6 +91,12 @@ var g_resources = [
 		src: "data/fonts/fonts82x80.png"
 	},
 	
+	{
+		name: 'main_menu',  
+		type:'binary',  
+		src: 'data/music/Cuddly - main menu.ym'
+	},
+	
 	/////////////////////////
 	// Big Sprite stuff
 	/////////////////////////
@@ -179,13 +185,13 @@ var g_resources = [
 		type:"image",	
 		src: "screens/BigSprite/spriteSpc.png"
 	},	
-	// todo audio track
-	/*{
-		name: "BigSpriteTrack",		
-		type: "audio", 
-		src: "screens/BigSprite/Cuddly - Big Sprite.ym",	
-		channel : 1
-	}*/	
+	
+	// Big Sprite audio track
+	{
+		name: "bigsprite_music",		
+		type: "binary",
+		src:  "screens/BigSprite/Cuddly - Big Sprite.ym"
+	},
 	
 	/////////////////////////
 	// Starwars stuff
