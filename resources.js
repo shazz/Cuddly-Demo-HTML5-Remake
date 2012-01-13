@@ -286,13 +286,13 @@ var g_resources = [
 		type:"image",	
 		src: "screens/StarwarsDemo/sprite_o.png"
 	},
-	/////////////////////////
+        /////////////////////////
         // zuul stuff
-	/////////////////////////
-	//
-	{
-		name: "zuul_screen_music",
-		type:"binary",	
-		src: "screens/Zuul/MORONS.ym"
-	}
+        /////////////////////////
+        //
+        {
+                name: "zuul_screen_music",
+                type:"binary",	
+                src: "screens/Zuul/MORONS.ym"
+        }
 ];
