@@ -130,15 +130,15 @@ var jsApp	=
 		me.state.set(jsApp.ScreenID.themegascroller, new MegaScrollerScreen());	
 		me.state.set(jsApp.ScreenID.spreadpointdemo, new SpreadpointDemoScreen()); 
 		me.state.set(jsApp.ScreenID.thedigidemo, new DigiDemoScreen());	
-		me.state.set(jsApp.ScreenID.theledscroller, new LedScrollerScreen());	
+		me.state.set(jsApp.ScreenID.theledscroller, new LedScrollerScreen());
 		me.state.set(jsApp.ScreenID.thefullscreendemo, new FullscreenDemoScreen());
 		me.state.set(jsApp.ScreenID.theknucklebuster, new KnucklebusterScreen()); 
 		me.state.set(jsApp.ScreenID.thestarwarsdemo, new StarwarsDemoScreen());	
-		me.state.set(jsApp.ScreenID.thednademo, new DNADemoScreen());	
-		me.state.set(jsApp.ScreenID.themegaballdemo, new MegaBallScreen());	
-		me.state.set(jsApp.ScreenID.theresetdemo, new ResetDemoScreen());	
-		me.state.set(jsApp.ScreenID.thehiddenscreen, new HiddenScreen());	
-		me.state.set(jsApp.ScreenID.thezuulhiddenscreen, new ZuulScreen());				
+		me.state.set(jsApp.ScreenID.thednademo, new DNADemoScreen());
+		me.state.set(jsApp.ScreenID.themegaballdemo, new MegaBallScreen());
+		me.state.set(jsApp.ScreenID.theresetdemo, new ResetDemoScreen());
+		me.state.set(jsApp.ScreenID.thehiddenscreen, new HiddenScreen());
+		me.state.set(jsApp.ScreenID.thezuulhiddenscreen, new ZuulScreen());
 		
 		// set the "Play/Ingame" Screen Object
 		me.state.set(me.state.PLAY, new PlayScreen());

@@ -285,5 +285,14 @@ var g_resources = [
 		name: "sw_spriteO",	
 		type:"image",	
 		src: "screens/StarwarsDemo/sprite_o.png"
-	},	
+	},
+	/////////////////////////
+        // zuul stuff
+	/////////////////////////
+	//
+	{
+		name: "zuul_screen_music",
+		type:"binary",	
+		src: "screens/Zuul/MORONS.ym"
+	}
 ];

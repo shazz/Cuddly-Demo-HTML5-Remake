@@ -36,9 +36,9 @@ var ZuulScreen = me.ScreenObject.extend({
 		this.maincanvas.fill('#000000');	
 		
 		// play music
-		//me.audio.playTrack("");
+		jsApp.ymPlayer.load(me.loader.getBinary('zuul_screen_music'));
+		jsApp.ymPlayer.play();
 	},
-	
 
 	// make sure the screen is refreshed at every change 
 	update : function() 
@@ -71,8 +71,7 @@ var ZuulScreen = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// stop the current track
-		//me.audio.stopTrack();
-
+		jsApp.ymPlayer.stop();
 	}
 
 
