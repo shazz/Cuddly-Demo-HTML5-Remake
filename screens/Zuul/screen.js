@@ -12,16 +12,25 @@ var ZuulScreen = me.ScreenObject.extend({
 	---*/
 	init : function() 
 	{
+		var h, w, ch, cw;
 		// call the parent constructor
 		this.parent(true);
 		
 		this.maincanvas=new canvas(me.video.getScreenCanvas()); // reuse melonJS main canvas
-		
+		h  = this.maincanvas.height;
+		w  = this.maincanvas.width;
+		ch = h >> 1;
+		cw = w >> 1;
+
 		this.font = new image(me.loader.getImage("fonts"));
 		this.font.initTile(82,80,32);
+		this.starfield = new starfield3D(this.maincanvas, 500, 2,
+						 w, h, cw, ch,
+						 '#FFFFFF', 100, 0, 0);
 		this.scrolltext = new scrolltext_horizontal();
 		this.scrolltext.scrtxt="ZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUULZUUL";
 		this.scrolltext.init(this.maincanvas,this.font,12);
+		this.no_sound = true;
 	},
 	
 	/* ---
@@ -36,8 +45,10 @@ var ZuulScreen = me.ScreenObject.extend({
 		this.maincanvas.fill('#000000');	
 		
 		// play music
+		if (!this.no_sound) {
 		jsApp.ymPlayer.load(me.loader.getBinary('zuul_screen_music'));
 		jsApp.ymPlayer.play();
+		}
 	},
 
 	// make sure the screen is refreshed at every change 
@@ -61,6 +72,7 @@ var ZuulScreen = me.ScreenObject.extend({
 	{
 		this.maincanvas.fill('#000000');
 		this.scrolltext.draw(200);
+		this.starfield.draw();
 	},
 	
 	/*---
@@ -71,7 +83,9 @@ var ZuulScreen = me.ScreenObject.extend({
 	onDestroyEvent : function()
 	{
 		// stop the current track
-		jsApp.ymPlayer.stop();
+		if (!this.no_sound) {
+			jsApp.ymPlayer.stop();
+		}
 	}
 
 
